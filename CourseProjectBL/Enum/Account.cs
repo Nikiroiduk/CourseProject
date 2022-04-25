@@ -3,7 +3,7 @@
     public enum Account
     {
         Cash,
-        ACcounts,
+        Accounts,
         Card
     }
 }

@@ -1,9 +1,4 @@
-﻿using MongoDB.Bson;
-using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-
-namespace CourseProjectBL
+﻿namespace CourseProjectBL
 {
     public class DataServices
     {
@@ -25,6 +20,12 @@ namespace CourseProjectBL
         public bool AddNewUser(string Login, string Password)
         {
             db.InsertRecord("Users", new User { Login = Login, Password = Security.EncryptPlainTextToCipherText(Password) });
+            return true;
+        }
+
+        public bool UpdateUserData(User user)
+        {
+            db.UpsertRecord("Users", user.Id, user);
             return true;
         }
 

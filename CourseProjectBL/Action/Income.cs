@@ -3,12 +3,10 @@ using System;
 
 namespace CourseProjectBL.Action
 {
-    class Income : IAction
+    public class Income : AbstractAction
     {
-        public double Amount { get; set; }
-        public DateTime DateTime { get; set; }
-        public string Note { get; set; }
-        public Category Category { get; set; }
-        public Account Account { get; set; }
+        public Income(DateTime dateTime, Account account, Category category, double amount, string note = "") : base(dateTime, account, category, amount, note)
+        {
+        }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using CourseProjectBL;
+using CourseProjectBL.Action;
+using CourseProjectBL.Enum;
 using MongoDB.Driver;
 using System;
 using System.Security.Cryptography;
@@ -46,6 +48,7 @@ namespace CourseProjectViewConsole
                         if (dataServices.AddNewUser(login, password))
                         {
                             Console.WriteLine("New user was succesfully added!");
+                            user = dataServices.GetUserByLogin(login);
                         }
                         else
                         {
@@ -61,18 +64,18 @@ namespace CourseProjectViewConsole
             while (true)
             {
                 Console.WriteLine("Select action");
-                Console.WriteLine("1. Income\n2. Expense\n3. Transfer\n0. Exit");
+                Console.WriteLine("1. Income\n2. Expense\n0. Exit");
                 var ans = Console.ReadLine();
                 switch (ans)
                 {
                     case "1":
                         Console.WriteLine("Income action\n");
+                        user.Actions.Add(new Expense(DateTime.UtcNow, Account.Cash, Category.Food, 150));
+                        //TODO: maybe make save with INotifyPropertyChanged will be better
+                        dataServices.UpdateUserData(user);
                         break;
                     case "2":
                         Console.WriteLine("Expense action\n");
-                        break;
-                    case "3":
-                        Console.WriteLine("Transfer action\n");
                         break;
                     case "0":
                         Environment.Exit(0);
