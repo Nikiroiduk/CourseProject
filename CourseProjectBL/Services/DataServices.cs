@@ -19,7 +19,7 @@
 
         public bool AddNewUser(string Login, string Password)
         {
-            db.InsertRecord("Users", new User { Login = Login, Password = Security.EncryptPlainTextToCipherText(Password) });
+            db.InsertRecord("Users", new User { Login = Login, Password = AuthService.EncryptPlainTextToCipherText(Password) });
             return true;
         }
 

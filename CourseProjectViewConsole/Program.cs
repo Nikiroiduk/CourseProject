@@ -1,6 +1,7 @@
 ﻿using CourseProjectBL;
 using CourseProjectBL.Action;
 using CourseProjectBL.Enum;
+using CourseProjectBL.Services;
 using MongoDB.Driver;
 using System;
 using System.Security.Cryptography;
@@ -23,7 +24,7 @@ namespace CourseProjectViewConsole
                 {
                     Console.WriteLine("Enter password:");
                     var pass = Console.ReadLine();
-                    if (Security.ComparePassword(user.Password, pass))
+                    if (AuthService.ComparePassword(user.Password, pass))
                     {
                         Console.WriteLine("Succesfully entered!");
                         break;
