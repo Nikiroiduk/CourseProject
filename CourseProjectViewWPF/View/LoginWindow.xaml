@@ -1,0 +1,36 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CourseProjectViewWPF.ViewModel"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="CourseProjectViewWPF.View.LoginWindow"
+        mc:Ignorable="d"
+        Title="LoginWindow" Height="500" Width="350"
+        WindowStartupLocation="CenterScreen"
+        AllowsTransparency="True"
+        Background="Transparent"
+        TextElement.Foreground="{DynamicResource MaterialDesignDarkForeground}"
+        ResizeMode="NoResize"
+        ShowInTaskbar="True"
+        WindowStyle="None">
+    <Window.DataContext>
+        <local:LoginWindowViewModel/>
+    </Window.DataContext>
+
+    <Border Background="{DynamicResource MaterialDesignDarkBackground}" CornerRadius="8">
+        <Grid Margin="24">
+            <StackPanel Orientation="Vertical">
+                <TextBox materialDesign:HintAssist.HelperText="Login"
+                         materialDesign:HintAssist.HelperTextFontSize="16"
+                         FontSize="20"
+                         Margin="0, 0, 0, 20"/>
+                <TextBox materialDesign:HintAssist.HelperText="Password"
+                         materialDesign:HintAssist.HelperTextFontSize="16"
+                         FontSize="20"
+                         Margin="0, 0, 0, 20"/>
+            </StackPanel>
+
+        </Grid>
+    </Border>
+</Window>
