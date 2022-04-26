@@ -1,5 +1,5 @@
 ﻿using CourseProjectBL;
-using CourseProjectBL.Action;
+using CourseProjectBL.Actions;
 using CourseProjectBL.Enum;
 using CourseProjectBL.Services;
 using MongoDB.Driver;
@@ -13,6 +13,9 @@ namespace CourseProjectViewConsole
     {
         static void Main(string[] args)
         {
+            //MongoCRUD mongoCRUD = new("CourseProject");
+            //var meh = mongoCRUD.LoadRecords<User>("Users");
+
             DataServices dataServices = new();
 
             Console.WriteLine("Enter login:");
@@ -24,7 +27,7 @@ namespace CourseProjectViewConsole
                 {
                     Console.WriteLine("Enter password:");
                     var pass = Console.ReadLine();
-                    if (AuthService.ComparePassword(user.Password, pass))
+                    if (PasswordService.ComparePassword(user.Password, pass))
                     {
                         Console.WriteLine("Succesfully entered!");
                         break;
@@ -46,10 +49,10 @@ namespace CourseProjectViewConsole
                     case "1":
                         Console.WriteLine("Enter password:");
                         var password = Console.ReadLine();
-                        if (dataServices.AddNewUser(login, password))
+                        user = AuthService.Auth(login, password);
+                        if (user != null)
                         {
                             Console.WriteLine("New user was succesfully added!");
-                            user = dataServices.GetUserByLogin(login);
                         }
                         else
                         {

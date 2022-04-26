@@ -1,58 +1,39 @@
-﻿using System;
-using System.Security.Cryptography;
-using System.Text;
-
-namespace CourseProjectBL.Services
+﻿namespace CourseProjectBL.Services
 {
     public static class AuthService
     {
-        private const string SecurityKey = "6dxgC86^R?F*T,7h";
-        public static bool ComparePassword(string encryptedKey, string decryptedKey)
+
+        public static bool ContainsLogin(string Login)
         {
-            return encryptedKey == EncryptPlainTextToCipherText(decryptedKey);
+            DataServices dataServices = new();
+            return dataServices.GetUserByLogin(Login) != null;
         }
 
-        public static string EncryptPlainTextToCipherText(string PlainText)
+        public static User? Register(string Login, string Password)
         {
-            byte[] toEncryptedArray = Encoding.UTF8.GetBytes(PlainText);
-
-            var objMD5CryptoService = new MD5CryptoServiceProvider();
-            byte[] securityKeyArray = objMD5CryptoService.ComputeHash(Encoding.UTF8.GetBytes(SecurityKey));
-            objMD5CryptoService.Clear();
-
-            var objTripleDESCryptoService = new TripleDESCryptoServiceProvider
-            {
-                Key = securityKeyArray,
-                Mode = CipherMode.ECB,
-                Padding = PaddingMode.PKCS7
-            };
-
-            var objCrytpoTransform = objTripleDESCryptoService.CreateEncryptor();
-            byte[] resultArray = objCrytpoTransform.TransformFinalBlock(toEncryptedArray, 0, toEncryptedArray.Length);
-            objTripleDESCryptoService.Clear();
-            return Convert.ToBase64String(resultArray, 0, resultArray.Length);
+            DataServices dataServices = new();
+            return dataServices.AddNewUser(Login, Password);
         }
 
-        public static string DecryptCipherTextToPlainText(string CipherText)
+        public static User? Auth(string Login, string Password)
         {
-            byte[] toEncryptArray = Convert.FromBase64String(CipherText);
-            var objMD5CryptoService = new MD5CryptoServiceProvider();
-
-            byte[] securityKeyArray = objMD5CryptoService.ComputeHash(Encoding.UTF8.GetBytes(SecurityKey));
-            objMD5CryptoService.Clear();
-
-            var objTripleDESCryptoService = new TripleDESCryptoServiceProvider
+            DataServices dataServices = new();
+            var user = dataServices.GetUserByLogin(Login);
+            if (user != null)
             {
-                Key = securityKeyArray,
-                Mode = CipherMode.ECB,
-                Padding = PaddingMode.PKCS7
-            };
-
-            var objCrytpoTransform = objTripleDESCryptoService.CreateDecryptor();
-            byte[] resultArray = objCrytpoTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
-            objTripleDESCryptoService.Clear();
-
-            return Encoding.UTF8.GetString(resultArray);
+                if (PasswordService.ComparePassword(user.Password, Password))
+                {
+                    return user;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

@@ -23,14 +23,24 @@
             <StackPanel Orientation="Vertical">
                 <TextBox materialDesign:HintAssist.HelperText="Login"
                          materialDesign:HintAssist.HelperTextFontSize="16"
+                         materialDesign:ValidationAssist.FontSize="16"
+                         materialDesign:TextFieldAssist.HasClearButton="True"
                          FontSize="20"
-                         Margin="0, 0, 0, 20"/>
+                         Margin="0, 0, 0, 20"
+                         Text="{Binding Login, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
                 <TextBox materialDesign:HintAssist.HelperText="Password"
                          materialDesign:HintAssist.HelperTextFontSize="16"
+                         materialDesign:ValidationAssist.FontSize="16"
+                         materialDesign:TextFieldAssist.HasClearButton="True"
                          FontSize="20"
-                         Margin="0, 0, 0, 20"/>
+                         Margin="0, 0, 0, 20"
+                         Text="{Binding Password, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Margin="0,100,0,0"
+                        Width="100"
+                        Content="{Binding ButtonContent}"
+                        Foreground="{DynamicResource MaterialDesignDarkForeground}"
+                        Command="{Binding LoginClick}"/>
             </StackPanel>
-
         </Grid>
     </Border>
 </Window>

@@ -17,10 +17,17 @@
             return null;
         }
 
-        public bool AddNewUser(string Login, string Password)
+        //public bool AddNewUser(string Login, string Password)
+        //{
+        //    db.InsertRecord("Users", new User { Login = Login, Password = PasswordService.EncryptPlainTextToCipherText(Password) });
+        //    return true;
+        //}
+
+        public User AddNewUser(string Login, string Password)
         {
-            db.InsertRecord("Users", new User { Login = Login, Password = AuthService.EncryptPlainTextToCipherText(Password) });
-            return true;
+            var user = new User { Login = Login, Password = PasswordService.EncryptPlainTextToCipherText(Password) };
+            db.InsertRecord("Users", user);
+            return user;
         }
 
         public bool UpdateUserData(User user)

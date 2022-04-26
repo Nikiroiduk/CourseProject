@@ -1,9 +1,9 @@
 ﻿using CourseProjectBL.Enum;
 using System;
 
-namespace CourseProjectBL.Action
+namespace CourseProjectBL.Actions
 {
-    public abstract class AbstractAction
+    public class Action
     {
         public DateTime DateTime { get; set; }
         public Account Account { get; set; }
@@ -11,7 +11,7 @@ namespace CourseProjectBL.Action
         public double Amount { get; set; }
         public string Note { get; set; }
         
-        public AbstractAction(DateTime dateTime,
+        public Action(DateTime dateTime,
                               Account account,
                               Category category,
                               double amount,
