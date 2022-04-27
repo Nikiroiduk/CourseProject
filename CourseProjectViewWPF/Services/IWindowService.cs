@@ -2,6 +2,6 @@
 {
     interface IWindowService
     {
-        void showWindow(object viewModel);
+        void CreateWindow(object meh);
     }
 }

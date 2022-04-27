@@ -1,4 +1,6 @@
-﻿namespace CourseProjectBL.Services
+﻿using CourseProjectBL.Model;
+
+namespace CourseProjectBL.Services
 {
     public class DataServices
     {
@@ -23,9 +25,9 @@
         //    return true;
         //}
 
-        public User AddNewUser(string Login, string Password)
+        public User AddNewUser(string Name, string Login, string Password)
         {
-            var user = new User { Login = Login, Password = PasswordService.EncryptPlainTextToCipherText(Password) };
+            var user = new User { Name = Name, Login = Login, Password = PasswordService.EncryptPlainTextToCipherText(Password) };
             db.InsertRecord("Users", user);
             return user;
         }

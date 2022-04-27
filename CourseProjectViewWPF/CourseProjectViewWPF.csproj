@@ -14,4 +14,8 @@
     <ProjectReference Include="..\CourseProjectBL\CourseProjectBL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Model\" />
+  </ItemGroup>
+
 </Project>

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace CourseProjectViewWPF.Model.Commands
+namespace CourseProjectViewWPF.Commands
 {
     internal abstract class BaseCommand : ICommand
     {

@@ -1,11 +1,7 @@
-﻿using CourseProjectBL;
-using CourseProjectBL.Actions;
+﻿using CourseProjectBL.Actions;
 using CourseProjectBL.Enum;
 using CourseProjectBL.Services;
-using MongoDB.Driver;
 using System;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace CourseProjectViewConsole
 {
@@ -47,9 +43,11 @@ namespace CourseProjectViewConsole
                 switch (answer)
                 {
                     case "1":
+                        Console.WriteLine("Enter name:");
+                        var name = Console.ReadLine();
                         Console.WriteLine("Enter password:");
                         var password = Console.ReadLine();
-                        user = AuthService.Auth(login, password);
+                        user = AuthService.Register(name, login, password);
                         if (user != null)
                         {
                             Console.WriteLine("New user was succesfully added!");
@@ -74,18 +72,36 @@ namespace CourseProjectViewConsole
                 {
                     case "1":
                         Console.WriteLine("Income action\n");
-                        user.Actions.Add(new Expense(DateTime.UtcNow, Account.Cash, Category.Food, 150));
-                        //TODO: maybe make save with INotifyPropertyChanged will be better
+                        user.Incomes.Add(new Income(DateTime.UtcNow, Account.Cash, Category.Food, 150));
                         dataServices.UpdateUserData(user);
                         break;
                     case "2":
                         Console.WriteLine("Expense action\n");
+                        user.Expenses.Add(new Expense(DateTime.UtcNow, Account.Cash, Category.Food, 150));
+                        dataServices.UpdateUserData(user);
                         break;
                     case "0":
+
+                        foreach (var item in user.Expenses)
+                        {
+                            Console.WriteLine($"spend {item.Amount} at {item.DateTime.Date}");
+                        }
+                        foreach (var item in user.Incomes)
+                        {
+                            Console.WriteLine($"get {item.Amount} at {item.DateTime.Date}");
+                        }
+
+
                         Environment.Exit(0);
+
+
                         break;
                 }
             }
+
+
+
+
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CourseProjectViewWPF.Model.Commands
+namespace CourseProjectViewWPF.Commands
 {
     class LambdaCommand : BaseCommand
     {

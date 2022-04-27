@@ -1,4 +1,7 @@
-﻿namespace CourseProjectBL.Services
+﻿
+using CourseProjectBL.Model;
+
+namespace CourseProjectBL.Services
 {
     public static class AuthService
     {
@@ -9,10 +12,14 @@
             return dataServices.GetUserByLogin(Login) != null;
         }
 
-        public static User? Register(string Login, string Password)
+        public static User? Register(string Name, string Login, string Password)
         {
             DataServices dataServices = new();
-            return dataServices.AddNewUser(Login, Password);
+            if (dataServices.GetUserByLogin(Login) != null)
+            {
+                return Auth(Login, Password);
+            }
+            return dataServices.AddNewUser(Name, Login, Password);
         }
 
         public static User? Auth(string Login, string Password)

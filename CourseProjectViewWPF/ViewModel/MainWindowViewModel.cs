@@ -1,12 +1,16 @@
-﻿using CourseProjectViewWPF.Services;
+﻿using CourseProjectBL.Model;
+using CourseProjectViewWPF.Services;
 using CourseProjectViewWPF.View;
 
 namespace CourseProjectViewWPF.ViewModel
 {
-    class MainWindowViewModel : ViewModel
+    public class MainWindowViewModel : ViewModel
     {
-        public MainWindowViewModel()
+        private User User { get; set; }
+        public MainWindowViewModel(User User)
         {
+            this.User = User;
+
             #region Commands
 
             #endregion

@@ -1,32 +1,31 @@
 ﻿using CourseProjectBL.Services;
-using CourseProjectViewWPF.Model.Commands;
+using CourseProjectBL.Model;
+using CourseProjectViewWPF.Commands;
+using CourseProjectViewWPF.Services;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Input;
+using System.Windows;
 
 namespace CourseProjectViewWPF.ViewModel
 {
     class LoginWindowViewModel : ViewModel, IDataErrorInfo
     {
+        //TODO: Close this window after signing in
         public LoginWindowViewModel()
         {
             #region Commands
-            LoginClick = new LambdaCommand(OnLoginClick, CanLoginClick);
+            SignInClick = new LambdaCommand(OnSignInClick, CanSignInClick);
+            SignUpClick = new LambdaCommand(OnSignUpClick, CanSignUpClick);
             #endregion
         }
 
-
-        #region ClassicSize
-        private bool _ClassicSize = true;
-
-        public bool ClassicSize
-        {
-            get => _ClassicSize;
-            set => Set(ref _ClassicSize, value);
-        }
-        #endregion
-
         #region Login
         private string _Login;
+        [Required]
         public string Login
         {
             get => _Login;
@@ -36,6 +35,7 @@ namespace CourseProjectViewWPF.ViewModel
 
         #region Password
         private string _Password;
+        [Required]
         public string Password
         {
             get => _Password;
@@ -43,62 +43,119 @@ namespace CourseProjectViewWPF.ViewModel
         }
         #endregion
 
-        #region ButtonContent
-        private string _ButtonContent = "Sign In";
-        public string ButtonContent
+        #region Name
+        private string _Name;
+        [Required]
+        [RegularExpression(@"[a-zA-Z]+")]
+        public string Name
         {
-            get => _ButtonContent;
-            set => Set(ref _ButtonContent, value);
+            get => _Name;
+            set => Set(ref _Name, value);
         }
         #endregion
 
+        #region ErrorMsg
+        private string _ErrorMsg;
+        public string ErrorMsg
+        {
+            get => _ErrorMsg;
+            set => Set(ref _ErrorMsg, value);
+        }
+        #endregion
 
         #region Error
         public string this[string columnName]
         {
             get
             {
-                if (columnName == "Login")
+                var validationResults = new List<ValidationResult>();
+                var property = GetType().GetProperty(columnName);
+
+                var validationContext = new ValidationContext(this)
                 {
-                    if (string.IsNullOrWhiteSpace(Login)) return "Login can't be null or white space";
-                }
-                if (columnName == "Password")
+                    MemberName = columnName
+                };
+
+                var isValid = Validator.TryValidateProperty(property.GetValue(this), validationContext, validationResults);
+                if (isValid)
                 {
-                    if (string.IsNullOrWhiteSpace(Login)) return "Password can't be null or white space";
+                    return null;
                 }
-                return null;
+                return validationResults.First().ErrorMessage;
             }
         }
         public string Error
         {
             get
             {
-                return null;
+                return "";
             }
         }
         #endregion
 
-        #region LoginClick
-        public ICommand LoginClick { get; }
+        #region SignInClick
+        public ICommand SignInClick { get; }
 
-        private bool CanLoginClick(object p) => true;
-        private void OnLoginClick(object p)
+        private bool CanSignInClick(object p) => true;
+        private void OnSignInClick(object p)
         {
+            if (string.IsNullOrEmpty(Login))
+            {
+                return;
+            }
+            if (string.IsNullOrEmpty(Password))
+            {
+                return;
+            }
+
             var user = AuthService.Auth(Login, Password);
-            //if (ButtonContent == "Sign Up") 
-            //{
-            //    var newUser = AuthService.Register(Login, Password);
-            //}
             if (user != null)
             {
-                //TODO: Open main window
+                StartProgram(user);
             }
             else
             {
-                ButtonContent = "Sign Up";
-                //TODO: Register new user
+                ErrorMsg = "Something went wrong";
+            }
+        }
+
+        #endregion
+
+
+        #region SignUpClick
+        public ICommand SignUpClick { get; }
+
+        private bool CanSignUpClick(object p) => true;
+        private void OnSignUpClick(object p)
+        {
+            if (string.IsNullOrEmpty(Login))
+            {
+                return;
+            }
+            if (string.IsNullOrEmpty(Password))
+            {
+                return;
+            }
+            if (string.IsNullOrEmpty(Name) && Regex.IsMatch(Name, @"[a-zA-Z]+"))
+            {
+                return;
+            }
+            var user = AuthService.Register(Name, Login, Password);
+            if (user != null)
+            {
+                StartProgram(user);
+            }
+            else
+            {
+                ErrorMsg = "Something went wrong";
             }
         }
         #endregion
+
+        private static void StartProgram(User user)
+        {
+            WindowService windowService = new();
+            windowService.CreateWindow(user);
+        }
     }
 }
