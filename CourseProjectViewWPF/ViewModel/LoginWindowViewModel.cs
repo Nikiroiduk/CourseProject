@@ -14,7 +14,6 @@ namespace CourseProjectViewWPF.ViewModel
 {
     class LoginWindowViewModel : ViewModel, IDataErrorInfo
     {
-        //TODO: Close this window after signing in
         public LoginWindowViewModel()
         {
             #region Commands
@@ -38,7 +37,7 @@ namespace CourseProjectViewWPF.ViewModel
         [Required]
         public string Password
         {
-            get => _Password;
+            get =>_Password;
             set => Set(ref _Password, value);
         }
         #endregion
@@ -112,6 +111,7 @@ namespace CourseProjectViewWPF.ViewModel
             if (user != null)
             {
                 StartProgram(user);
+                CloseLoginWindow(p as Window);
             }
             else
             {
@@ -119,7 +119,12 @@ namespace CourseProjectViewWPF.ViewModel
             }
         }
 
+
         #endregion
+        private void CloseLoginWindow(Window window)
+        {
+            window.Close();
+        }
 
 
         #region SignUpClick
@@ -144,6 +149,7 @@ namespace CourseProjectViewWPF.ViewModel
             if (user != null)
             {
                 StartProgram(user);
+                CloseLoginWindow(p as Window);
             }
             else
             {

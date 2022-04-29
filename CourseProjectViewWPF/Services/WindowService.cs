@@ -1,5 +1,6 @@
 ﻿using CourseProjectBL;
 using CourseProjectBL.Model;
+using CourseProjectViewWPF.View;
 using CourseProjectViewWPF.ViewModel;
 using System.Windows;
 
