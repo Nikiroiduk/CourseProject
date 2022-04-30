@@ -19,6 +19,7 @@ namespace CourseProjectViewWPF.ViewModel
             #region Commands
             SignInClick = new LambdaCommand(OnSignInClick, CanSignInClick);
             SignUpClick = new LambdaCommand(OnSignUpClick, CanSignUpClick);
+            CloseClick = new LambdaCommand(OnCloseClick, CanCloseClick);
             #endregion
         }
 
@@ -92,6 +93,18 @@ namespace CourseProjectViewWPF.ViewModel
         }
         #endregion
 
+        #region CloseClick
+        public ICommand CloseClick { get; }
+
+        private bool CanCloseClick(object p) => true;
+        private void OnCloseClick(object p)
+        {
+            CloseLoginWindow(p as Window);
+        }
+
+
+        #endregion
+
         #region SignInClick
         public ICommand SignInClick { get; }
 
@@ -121,10 +134,6 @@ namespace CourseProjectViewWPF.ViewModel
 
 
         #endregion
-        private void CloseLoginWindow(Window window)
-        {
-            window.Close();
-        }
 
 
         #region SignUpClick
@@ -162,6 +171,10 @@ namespace CourseProjectViewWPF.ViewModel
         {
             WindowService windowService = new();
             windowService.CreateWindow(user);
+        }
+        private void CloseLoginWindow(Window window)
+        {
+            window.Close();
         }
     }
 }
