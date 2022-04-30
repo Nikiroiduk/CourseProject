@@ -2,6 +2,8 @@
 using CourseProjectBL.Enum;
 using CourseProjectBL.Services;
 using System;
+using System.Net;
+using System.Security;
 
 namespace CourseProjectViewConsole
 {
@@ -23,6 +25,7 @@ namespace CourseProjectViewConsole
                 {
                     Console.WriteLine("Enter password:");
                     var pass = Console.ReadLine();
+                    
                     if (PasswordService.ComparePassword(user.Password, pass))
                     {
                         Console.WriteLine("Succesfully entered!");

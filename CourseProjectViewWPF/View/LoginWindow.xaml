@@ -8,15 +8,16 @@
     xmlns:crtr="clr-namespace:CourseProjectViewWPF.Converters" 
     x:Class="CourseProjectViewWPF.View.LoginWindow"
     mc:Ignorable="d"
-    Title="LoginWindow" Height="500" Width="350"
+    Title="LoginWindow" Height="600" Width="350"
     WindowStartupLocation="CenterScreen"
     AllowsTransparency="True"
     Background="Transparent"
-    TextElement.Foreground="{DynamicResource MaterialDesignDarkForeground}"
+    TextElement.Foreground="{DynamicResource MaterialDesignLightForeground}"
     ResizeMode="NoResize"
     ShowInTaskbar="True"
     WindowStyle="None"
     x:Name="Window">
+<!--Password box for password-->
     <Window.DataContext>
         <local:LoginWindowViewModel/>
     </Window.DataContext>
@@ -27,12 +28,13 @@
             <Setter Property="FontSize" Value="10"/>
             <Setter Property="Height" Value="70"/>
         </Style>
-        <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignTextBox}">
+        <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
             <Setter Property="materialDesign:HintAssist.HelperTextFontSize" Value="16"/>
             <Setter Property="materialDesign:ValidationAssist.FontSize" Value="16"/>
             <Setter Property="materialDesign:ValidationAssist.OnlyShowOnFocus" Value="True"/>
             <Setter Property="materialDesign:TextFieldAssist.HasClearButton" Value="True"/>
             <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Foreground" Value="{DynamicResource MaterialDesignLightForeground}"/>
         </Style>
         <Style TargetType="Label" BasedOn="{StaticResource MaterialDesignLabel}">
             <Setter Property="Padding" Value="10, 0, 10, 0"/>
@@ -42,13 +44,13 @@
             <Setter Property="Content" Value="{Binding ErrorMsg}"/>
         </Style>
         <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatMidBgButton}">
-            <Setter Property="Width" Value="100"/>
+            <Setter Property="Width" Value="250"/>
             <Setter Property="Height" Value="50"/>
             <Setter Property="Foreground" Value="{DynamicResource MaterialDesignDarkForeground}"/>
             <Setter Property="CommandParameter" Value="{Binding ElementName=Window}"/>
         </Style>
     </Window.Resources>
-    <Border Background="{DynamicResource MaterialDesignDarkBackground}" CornerRadius="8">
+    <Border Background="{DynamicResource MaterialDesignLightBackground}" CornerRadius="8">
         <Grid>
             <Button Command="{Binding CloseClick}"
                     HorizontalAlignment="Right"
@@ -73,56 +75,61 @@
                     </Path>
                 </Canvas>
             </Button>
-            <TabControl Foreground="{DynamicResource MaterialDesignDarkForeground}" Margin="24,40,24,24" Style="{DynamicResource MaterialDesignTabControl}">
+            <TabControl Foreground="{DynamicResource MaterialDesignLightForeground}" Margin="24,40,24,24" Style="{DynamicResource MaterialDesignTabControl}">
                 <TabItem>
                     <TabItem.HeaderTemplate>
                         <DataTemplate>
-                            <TextBlock Text="Sign In" FontSize="20" Foreground="{DynamicResource MaterialDesignDarkForeground}"/>
+                            <TextBlock Text="Sign In" FontSize="20" Foreground="{DynamicResource MaterialDesignLightForeground}"/>
                         </DataTemplate>
                     </TabItem.HeaderTemplate>
-                    <StackPanel Orientation="Vertical">
-                        <TextBox materialDesign:HintAssist.HelperText="Login"
-                                 Margin="0, 20, 0, 20"
-                                 Text="{Binding Login, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
-                        <TextBox materialDesign:HintAssist.HelperText="Password"
-                                 Margin="0, 0, 0, 20"
-                                 Grid.Column="0"
-                                 Text="{Binding Password,
-                                     Mode=TwoWay,
-                                     ValidatesOnDataErrors=True,
-                                     UpdateSourceTrigger=PropertyChanged}"/>
-                        <Label/>
+                    <DockPanel>
+                        <StackPanel Orientation="Vertical" DockPanel.Dock="Top">
+                            <TextBox materialDesign:HintAssist.Hint="Login"
+                                     Margin="0, 20, 0, 30"
+                                     Text="{Binding Login, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox materialDesign:HintAssist.Hint="Password"
+                                     Margin="0, 0, 0, 20"
+                                     Grid.Column="0"
+                                     Text="{Binding Password,
+                                         Mode=TwoWay,
+                                         ValidatesOnDataErrors=True,
+                                         UpdateSourceTrigger=PropertyChanged}"/>
+                            <Label/>
+                        </StackPanel>
                         <Button Margin="0,60,0,0"
                                 Content="Sign In"
-                                Command="{Binding SignInClick}"/>
-                    </StackPanel>
+                                Command="{Binding SignInClick}"
+                                DockPanel.Dock="Bottom"/>
+                    </DockPanel>
                 </TabItem>
                 <TabItem>
                     <TabItem.HeaderTemplate>
                         <DataTemplate>
-                            <TextBlock Text="Sign Up" FontSize="20" Foreground="{DynamicResource MaterialDesignDarkForeground}"/>
+                            <TextBlock Text="Sign Up" FontSize="20" Foreground="{DynamicResource MaterialDesignLightForeground}"/>
                         </DataTemplate>
                     </TabItem.HeaderTemplate>
-                    <StackPanel Orientation="Vertical">
-                        <TextBox materialDesign:HintAssist.HelperText="Name"
-                                 Margin="0, 20, 0, 20"
-                                 Text="{Binding Name, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
-                        <TextBox materialDesign:HintAssist.HelperText="Login"
-                                 Margin="0, 0, 0, 20"
-                                 Text="{Binding Login, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
-                        <TextBox materialDesign:HintAssist.HelperText="Password"
-                                 Margin="0, 0, 0, 20"
-                                 Grid.Column="0"
-                                 Text="{Binding Password,
-                                     Mode=TwoWay,
-                                     Converter={StaticResource PasswordConverter},
-                                     ValidatesOnDataErrors=True,
-                                     UpdateSourceTrigger=PropertyChanged}"/>
-                        <Label/>
+                    <DockPanel>
+                        <StackPanel Orientation="Vertical" DockPanel.Dock="Top">
+                            <TextBox materialDesign:HintAssist.Hint="Name"
+                                     Margin="0, 20, 0, 30"
+                                     Text="{Binding Name, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox materialDesign:HintAssist.Hint="Login"
+                                     Margin="0, 0, 0, 30"
+                                     Text="{Binding Login, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox materialDesign:HintAssist.Hint="Password"
+                                     Margin="0, 0, 0, 20"
+                                     Grid.Column="0"
+                                     Text="{Binding Password,
+                                         Mode=TwoWay,
+                                         ValidatesOnDataErrors=True,
+                                         UpdateSourceTrigger=PropertyChanged}"/>
+                            <Label/>
+                        </StackPanel>
                         <Button Margin="0,60,0,0"
                                 Content="Sign Up"
-                                Command="{Binding SignUpClick}"/>
-                    </StackPanel>
+                                Command="{Binding SignUpClick}"
+                                DockPanel.Dock="Bottom"/>
+                    </DockPanel>
                 </TabItem>
             </TabControl>
         </Grid>

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
 using System.Windows;
+using System.Security;
 
 namespace CourseProjectViewWPF.ViewModel
 {
@@ -146,7 +147,7 @@ namespace CourseProjectViewWPF.ViewModel
             {
                 return;
             }
-            if (string.IsNullOrEmpty(Password))
+            if (Password.Length < 1)
             {
                 return;
             }
