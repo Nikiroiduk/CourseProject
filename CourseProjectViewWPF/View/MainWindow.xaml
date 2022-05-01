@@ -4,27 +4,163 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:resources="clr-namespace:CourseProjectViewWPF"
         mc:Ignorable="d"
         Title="MainWindow" MinHeight="450" MinWidth="800"
-        Height="450" Width="800">
-    <Grid Background="{DynamicResource MaterialDesignLightBackground}">
+        Height="450" Width="800"
+        ShowInTaskbar="True"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        x:Name="Window">
+    <Window.Resources>
+        <Style TargetType="materialDesign:Card">
+            <Setter Property="BorderBrush" Value="#FF0000"/>
+        </Style>
+    </Window.Resources>
+    <Border Background="#F1F4FA" CornerRadius="8">
+        <Grid>
+            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,20">
+                <Button Command="{Binding MinimiseWindow}" CommandParameter="{Binding ElementName=Window}" Width="50" Height="30" Style="{DynamicResource MaterialDesignFlatButton}">
+                    <Canvas Height="25"  Width="25">
+                        <Path Stroke="Gray" StrokeThickness="2">
+                            <Path.Data>
+                                <PathGeometry>
+                                    <PathGeometry.Figures>
+                                        <PathFigure StartPoint="2,12">
+                                            <LineSegment Point="15,12"/>
+                                        </PathFigure>
+                                    </PathGeometry.Figures>
+                                </PathGeometry>
+                            </Path.Data>
+                        </Path>
+                    </Canvas>
+                </Button>
+                <Button Command="{Binding FullScreenWindow}" CommandParameter="{Binding ElementName=Window}" Width="50" Height="30" Style="{DynamicResource MaterialDesignFlatButton}">
+                    <Canvas Height="25"  Width="25">
+                        <Path Stroke="Gray" StrokeThickness="2">
+                            <Path.Data>
+                                <PathGeometry>
+                                    <PathGeometry.Figures>
+                                        <PathFigure StartPoint="4,3">
+                                            <LineSegment Point="4,17"/>
+                                        </PathFigure>
+                                        <PathFigure StartPoint="4,16">
+                                            <LineSegment Point="17,16"/>
+                                        </PathFigure>
+                                        <PathFigure StartPoint="16,16">
+                                            <LineSegment Point="16,3"/>
+                                        </PathFigure>
+                                        <PathFigure StartPoint="16,4">
+                                            <LineSegment Point="4,4"/>
+                                        </PathFigure>
+                                    </PathGeometry.Figures>
+                                </PathGeometry>
+                            </Path.Data>
+                        </Path>
+                    </Canvas>
+                </Button>
+                <Button Command="{Binding CloseWindow}" CommandParameter="{Binding ElementName=Window}" Width="50" Height="30" Style="{DynamicResource MaterialDesignFlatAccentButton}">
+                    <Canvas Height="25"  Width="25">
+                        <Path Stroke="Gray" StrokeThickness="2">
+                            <Path.Data>
+                                <PathGeometry>
+                                    <PathGeometry.Figures>
+                                        <PathFigure StartPoint="5,5">
+                                            <LineSegment Point="16,16"/>
+                                        </PathFigure>
+                                        <PathFigure StartPoint="5,16">
+                                            <LineSegment Point="16,5"/>
+                                        </PathFigure>
+                                    </PathGeometry.Figures>
+                                </PathGeometry>
+                            </Path.Data>
+                        </Path>
+                    </Canvas>
+                </Button>
+            </StackPanel>
+            <DockPanel Margin="30, 50, 30, 30">
+                <Grid DockPanel.Dock="Top">
+                    <Label Content="Finanses" FontSize="26" FontWeight="Bold"/>
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                        <ComboBox Style="{DynamicResource MaterialDesignOutlinedComboBox}" Width="125" Margin="0, 0, 30, 0">
+                            <ComboBoxItem>
+                                <TextBlock FontSize="14" Text="01/05/2022"/>
+                            </ComboBoxItem>
+                        </ComboBox>
+                        <ComboBox Style="{DynamicResource MaterialDesignOutlinedComboBox}" Width="125">
+                            <ComboBoxItem>
+                                <TextBlock FontSize="14" Text="03/05/2022"/>
+                            </ComboBoxItem>
+                        </ComboBox>
+                    </StackPanel>
+                </Grid>
+                <Grid Margin="0,20,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="5*"/>
+                        <RowDefinition Height="5*"/>
+                        <RowDefinition Height="5*"/>
+                    </Grid.RowDefinitions>
+                    <Grid HorizontalAlignment="Center">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:Card Margin="0,0,30,0" materialDesign:ShadowAssist.ShadowDepth="Depth0" Width="200" Background="White" UniformCornerRadius="10">
+                                <StackPanel Orientation="Horizontal">
+                                    <Rectangle Width="60" Height="60" Fill="#ffaa00" Margin="20,0,0,0"/>
+                                    <StackPanel Margin="20,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical">
+                                        <TextBlock FontSize="22" FontWeight="DemiBold" Text="380$"/>
+                                        <TextBlock FontSize="14" Text="Income"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </materialDesign:Card>
+                            <materialDesign:Card Margin="0,0,30,0" materialDesign:ShadowAssist.ShadowDepth="Depth0" Width="200" Background="White" UniformCornerRadius="10">
+                                <StackPanel Orientation="Horizontal">
+                                    <Rectangle Width="60" Height="60" Fill="#ffaa00" Margin="20,0,0,0"/>
+                                    <StackPanel Margin="20,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical">
+                                        <TextBlock FontSize="22" FontWeight="DemiBold" Text="380$"/>
+                                        <TextBlock FontSize="14" Text="Income"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </materialDesign:Card>
+                            <materialDesign:Card Margin="0,0,0,0" materialDesign:ShadowAssist.ShadowDepth="Depth0" Width="200" Background="White" UniformCornerRadius="10">
+                                <StackPanel Orientation="Horizontal">
+                                    <Rectangle Width="60" Height="60" Fill="#ffaa00" Margin="20,0,0,0"/>
+                                    <StackPanel Margin="20,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical">
+                                        <TextBlock FontSize="22" FontWeight="DemiBold" Text="380$"/>
+                                        <TextBlock FontSize="14" Text="Income"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </materialDesign:Card>
+                        </StackPanel>
+                    </Grid>
+                    
+                </Grid>
+            </DockPanel>
+        </Grid>
+    </Border>
+    <!--<Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="10*"/>
         </Grid.ColumnDefinitions>
-        <ListBox>
+        --><!--<ListBox>
             <ListBoxItem materialDesign:ListBoxItemAssist.CornerRadius="8">
                 <ListBoxItem.Content>
                     <StackPanel Orientation="Horizontal">
-                        <!--<Image Source=""-->
                         <TextBlock Text="Dashboard"/>
                     </StackPanel>
                 </ListBoxItem.Content>
             </ListBoxItem>
-        </ListBox>
-        <Grid Grid.Column="1" Background="Aqua">
+            <ListBoxItem materialDesign:ListBoxItemAssist.CornerRadius="8">
+                <ListBoxItem.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Dashboard"/>
+                    </StackPanel>
+                </ListBoxItem.Content>
+            </ListBoxItem>
+        </ListBox>-->
+        <!--<Grid Grid.Column="1" Background="#F1F4FA">
             
-        </Grid>
+        </Grid>-->
         <!--<TabControl Style="{DynamicResource MaterialDesignNavigationRailTabControl}">
             <TabItem>
                 <TabItem.Header>
@@ -35,6 +171,6 @@
                 </Grid>
             </TabItem>
 
-        </TabControl>-->
-    </Grid>
+        </TabControl>--><!--
+    </Grid>-->
 </Window>

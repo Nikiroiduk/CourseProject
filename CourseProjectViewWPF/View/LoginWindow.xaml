@@ -57,9 +57,11 @@
                     VerticalAlignment="Top"
                     Width="50"
                     Height="30"
-                    Padding="10,7,0,0">
-                <Canvas Name="canvas" Height="25"  Width="25">
-                    <Path Stroke="White" StrokeThickness="2">
+                    Padding="10,7,0,0"
+                    Style="{DynamicResource MaterialDesignFlatAccentButton}"
+                    CommandParameter="{Binding ElementName=Window}">
+                <Canvas Height="25"  Width="25">
+                    <Path Stroke="Gray" StrokeThickness="2">
                         <Path.Data>
                             <PathGeometry>
                                 <PathGeometry.Figures>

@@ -4,8 +4,8 @@
              xmlns:local="clr-namespace:CourseProjectViewWPF"
              xmlns:vm="clr-namespace:CourseProjectViewWPF.ViewModel"
              xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
-             StartupUri="View/MainWindow.xaml">
-             <!--StartupUri="View/LoginWindow.xaml">-->
+             StartupUri="View/LoginWindow.xaml">
+             <!--StartupUri="View/MainWindow.xaml">-->
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
