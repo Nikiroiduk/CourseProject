@@ -33,13 +33,22 @@ namespace CourseProjectViewWPF.ViewModel
         }
         #endregion
 
+        #region WindowState
+        private WindowState _WindowState;
+        public WindowState WindowState
+        {
+            get => _WindowState;
+            set => Set(ref _WindowState, value);
+        }
+        #endregion
+
         #region MinimiseWindow
         public ICommand MinimiseWindow { get; }
 
         private bool CanMinimiseWindow(object p) => true;
         private void OnMinimiseWindow(object p)
         {
-
+            WindowState = WindowState.Minimized;
         }
         #endregion
 
@@ -49,7 +58,7 @@ namespace CourseProjectViewWPF.ViewModel
         private bool CanFullScreenWindow(object p) => true;
         private void OnFullScreenWindow(object p)
         {
-
+            WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
         }
         #endregion
 

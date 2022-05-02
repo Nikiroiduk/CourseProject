@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CourseProjectBL.Model;
+using CourseProjectViewWPF.Services;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +15,10 @@ namespace CourseProjectViewWPF
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            WindowService win = new();
+            win.CreateWindow(new User());
+        }
     }
 }

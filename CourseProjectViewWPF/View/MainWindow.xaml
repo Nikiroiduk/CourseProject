@@ -4,16 +4,18 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:resources="clr-namespace:CourseProjectViewWPF"
+        xmlns:crtr="clr-namespace:CourseProjectViewWPF.Converters"
         mc:Ignorable="d"
-        Title="MainWindow" MinHeight="450" MinWidth="800"
-        Height="450" Width="800"
+        Title="MainWindow" MinHeight="700" MinWidth="800"
+        Height="700" Width="800"
         ShowInTaskbar="True"
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"
-        x:Name="Window">
+        x:Name="Window"
+        WindowState="{Binding WindowState, Mode=TwoWay}">
     <Window.Resources>
+        <crtr:ContentHeightConverter x:Key="ContentHeightConverter"/>
         <Style TargetType="materialDesign:Card">
             <Setter Property="BorderBrush" Value="#FF0000"/>
         </Style>
@@ -21,7 +23,7 @@
     <Border Background="#F1F4FA" CornerRadius="8">
         <Grid>
             <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,20">
-                <Button Command="{Binding MinimiseWindow}" CommandParameter="{Binding ElementName=Window}" Width="50" Height="30" Style="{DynamicResource MaterialDesignFlatButton}">
+                <Button Command="{Binding MinimiseWindow}" Width="50" Height="30" Style="{DynamicResource MaterialDesignFlatButton}">
                     <Canvas Height="25"  Width="25">
                         <Path Stroke="Gray" StrokeThickness="2">
                             <Path.Data>
@@ -36,7 +38,7 @@
                         </Path>
                     </Canvas>
                 </Button>
-                <Button Command="{Binding FullScreenWindow}" CommandParameter="{Binding ElementName=Window}" Width="50" Height="30" Style="{DynamicResource MaterialDesignFlatButton}">
+                <Button Command="{Binding FullScreenWindow}" Width="50" Height="30" Style="{DynamicResource MaterialDesignFlatButton}">
                     <Canvas Height="25"  Width="25">
                         <Path Stroke="Gray" StrokeThickness="2">
                             <Path.Data>
@@ -79,8 +81,8 @@
                     </Canvas>
                 </Button>
             </StackPanel>
-            <DockPanel Margin="30, 50, 30, 30">
-                <Grid DockPanel.Dock="Top">
+            <StackPanel Margin="30, 30, 0, 30" Orientation="Vertical">
+                <Grid Margin="0, 20, 30, 0">
                     <Label Content="Finanses" FontSize="26" FontWeight="Bold"/>
                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                         <ComboBox Style="{DynamicResource MaterialDesignOutlinedComboBox}" Width="125" Margin="0, 0, 30, 0">
@@ -95,82 +97,96 @@
                         </ComboBox>
                     </StackPanel>
                 </Grid>
-                <Grid Margin="0,20,0,0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="5*"/>
-                        <RowDefinition Height="5*"/>
-                        <RowDefinition Height="5*"/>
-                    </Grid.RowDefinitions>
-                    <Grid HorizontalAlignment="Center">
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:Card Margin="0,0,30,0" materialDesign:ShadowAssist.ShadowDepth="Depth0" Width="200" Background="White" UniformCornerRadius="10">
-                                <StackPanel Orientation="Horizontal">
-                                    <Rectangle Width="60" Height="60" Fill="#ffaa00" Margin="20,0,0,0"/>
-                                    <StackPanel Margin="20,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical">
-                                        <TextBlock FontSize="22" FontWeight="DemiBold" Text="380$"/>
-                                        <TextBlock FontSize="14" Text="Income"/>
+                <Grid x:Name="mainContent">
+                    <ScrollViewer Style="{DynamicResource MaterialDesignScrollViewer}"
+                                  Margin="0, 20, 0, 0"
+                                  Height="{Binding ElementName=Window, Path=ActualHeight, Converter={StaticResource ContentHeightConverter}}"
+                                  materialDesign:ScrollViewerAssist.IsAutoHideEnabled="True">
+                        <Grid Margin="0, 0, 10, 0">
+                            <WrapPanel HorizontalAlignment="Center" Margin="0, 150, 0, 0">
+                                <materialDesign:Card Width="700" Height="370" materialDesign:ShadowAssist.ShadowDepth="Depth0" Margin="15">
+                                    <Grid Margin="10">
+                                        <StackPanel Orientation="Vertical">
+                                            <Grid Margin="10">
+                                                <TextBlock Margin="20, 0, 0, 0" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="18" Text="Latest actions"/>
+                                                <Button VerticalAlignment="Center" HorizontalAlignment="Right" >
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Canvas Height="25"  Width="25">
+                                                            <Path Stroke="{DynamicResource MaterialDesignDarkForeground}" StrokeThickness="2">
+                                                                <Path.Data>
+                                                                    <PathGeometry>
+                                                                        <PathGeometry.Figures>
+                                                                            <PathFigure StartPoint="1,12">
+                                                                                <LineSegment Point="13,12"/>
+                                                                            </PathFigure>
+                                                                            <PathFigure StartPoint="7,6">
+                                                                                <LineSegment Point="7,18"/>
+                                                                            </PathFigure>
+                                                                        </PathGeometry.Figures>
+                                                                    </PathGeometry>
+                                                                </Path.Data>
+                                                            </Path>
+                                                        </Canvas>
+                                                        <TextBlock Text="Add new" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </Button>
+                                            </Grid>
+                                            <ListView>
+                                                <ListView.View>
+                                                    <GridView>
+                                                        <GridViewColumn Width="200" Header="Test0"/>
+                                                        <GridViewColumn Width="200" Header="Test1"/>
+                                                        <GridViewColumn Width="200" Header="Test2"/>
+                                                        <GridViewColumn Width="200" Header="Test3"/>
+                                                    </GridView>
+                                                </ListView.View>
+                                            </ListView>
+                                        </StackPanel>
+                                    </Grid>                                           
+                                </materialDesign:Card>
+                                <materialDesign:Card Width="700" Height="370" materialDesign:ShadowAssist.ShadowDepth="Depth0" Margin="15">
+
+                                </materialDesign:Card>
+                                <materialDesign:Card Width="700" Height="370" materialDesign:ShadowAssist.ShadowDepth="Depth0" Margin="15">
+
+                                </materialDesign:Card>
+                                <materialDesign:Card Width="700" Height="370" materialDesign:ShadowAssist.ShadowDepth="Depth0" Margin="15">
+
+                                </materialDesign:Card>
+                            </WrapPanel>
+                            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Orientation="Horizontal">
+                                <materialDesign:Card Margin="0,0,30,0" materialDesign:ShadowAssist.ShadowDepth="Depth0" Width="200" Padding="30" Background="White" UniformCornerRadius="10">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Rectangle Width="60" Height="60" Fill="#ffaa00"/>
+                                        <StackPanel Margin="30,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical">
+                                            <TextBlock FontSize="22" FontWeight="DemiBold" Text="380$"/>
+                                            <TextBlock FontSize="14" Text="Income"/>
+                                        </StackPanel>
                                     </StackPanel>
-                                </StackPanel>
-                            </materialDesign:Card>
-                            <materialDesign:Card Margin="0,0,30,0" materialDesign:ShadowAssist.ShadowDepth="Depth0" Width="200" Background="White" UniformCornerRadius="10">
-                                <StackPanel Orientation="Horizontal">
-                                    <Rectangle Width="60" Height="60" Fill="#ffaa00" Margin="20,0,0,0"/>
-                                    <StackPanel Margin="20,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical">
-                                        <TextBlock FontSize="22" FontWeight="DemiBold" Text="380$"/>
-                                        <TextBlock FontSize="14" Text="Income"/>
+                                </materialDesign:Card>
+                                <materialDesign:Card Margin="0,0,30,0" materialDesign:ShadowAssist.ShadowDepth="Depth0" Width="200" Background="White" UniformCornerRadius="10">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Rectangle Width="60" Height="60" Fill="#ffaa00" Margin="20,0,0,0"/>
+                                        <StackPanel Margin="20,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical">
+                                            <TextBlock FontSize="22" FontWeight="DemiBold" Text="380$"/>
+                                            <TextBlock FontSize="14" Text="Income"/>
+                                        </StackPanel>
                                     </StackPanel>
-                                </StackPanel>
-                            </materialDesign:Card>
-                            <materialDesign:Card Margin="0,0,0,0" materialDesign:ShadowAssist.ShadowDepth="Depth0" Width="200" Background="White" UniformCornerRadius="10">
-                                <StackPanel Orientation="Horizontal">
-                                    <Rectangle Width="60" Height="60" Fill="#ffaa00" Margin="20,0,0,0"/>
-                                    <StackPanel Margin="20,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical">
-                                        <TextBlock FontSize="22" FontWeight="DemiBold" Text="380$"/>
-                                        <TextBlock FontSize="14" Text="Income"/>
+                                </materialDesign:Card>
+                                <materialDesign:Card Margin="0,0,0,0" materialDesign:ShadowAssist.ShadowDepth="Depth0" Width="200" Background="White" UniformCornerRadius="10">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Rectangle Width="60" Height="60" Fill="#ffaa00" Margin="20,0,0,0"/>
+                                        <StackPanel Margin="20,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical">
+                                            <TextBlock FontSize="22" FontWeight="DemiBold" Text="380$"/>
+                                            <TextBlock FontSize="14" Text="Income"/>
+                                        </StackPanel>
                                     </StackPanel>
-                                </StackPanel>
-                            </materialDesign:Card>
-                        </StackPanel>
-                    </Grid>
-                    
+                                </materialDesign:Card>
+                            </StackPanel>
+                        </Grid>
+                    </ScrollViewer>
                 </Grid>
-            </DockPanel>
+            </StackPanel>
         </Grid>
     </Border>
-    <!--<Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="10*"/>
-        </Grid.ColumnDefinitions>
-        --><!--<ListBox>
-            <ListBoxItem materialDesign:ListBoxItemAssist.CornerRadius="8">
-                <ListBoxItem.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Dashboard"/>
-                    </StackPanel>
-                </ListBoxItem.Content>
-            </ListBoxItem>
-            <ListBoxItem materialDesign:ListBoxItemAssist.CornerRadius="8">
-                <ListBoxItem.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Dashboard"/>
-                    </StackPanel>
-                </ListBoxItem.Content>
-            </ListBoxItem>
-        </ListBox>-->
-        <!--<Grid Grid.Column="1" Background="#F1F4FA">
-            
-        </Grid>-->
-        <!--<TabControl Style="{DynamicResource MaterialDesignNavigationRailTabControl}">
-            <TabItem>
-                <TabItem.Header>
-                    <TextBlock Text="Test"/>
-                </TabItem.Header>
-                <Grid>
-                    <TextBlock Text="Meh"/>
-                </Grid>
-            </TabItem>
-
-        </TabControl>--><!--
-    </Grid>-->
 </Window>

@@ -7,6 +7,11 @@ namespace CourseProjectBL.Model
 {
     public class User
     {
+        public User()
+        {
+
+        }
+
         [BsonId]
         public Guid Id { get; set; }
         public string Name { get; set; }

@@ -5,6 +5,10 @@ namespace CourseProjectBL.Actions
 {
     public class Expense : IAction
     {
+        public Expense()
+        {
+
+        }
         public Expense(DateTime dateTime, Account account, Category category, double amount, string note = "")
         {
             DateTime = dateTime;
