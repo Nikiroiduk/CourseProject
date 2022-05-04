@@ -5,6 +5,7 @@ using CourseProjectViewWPF.Services;
 using CourseProjectViewWPF.View;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 using Action = CourseProjectBL.Actions.Action;
@@ -22,6 +23,8 @@ namespace CourseProjectViewWPF.ViewModel
             CloseWindow = new LambdaCommand(OnCloseWindow, CanCloseWindow);
             MinimiseWindow = new LambdaCommand(OnMinimiseWindow, CanMinimiseWindow);
             FullScreenWindow = new LambdaCommand(OnFullScreenWindow, CanFullScreenWindow);
+            AddNew = new LambdaCommand(OnAddNew, CanAddNew);
+            RemoveItem = new LambdaCommand(OnRemoveItem, CanRemoveItem);
             #endregion
 
 
@@ -34,11 +37,45 @@ namespace CourseProjectViewWPF.ViewModel
         }
 
         #region Actions
-        public List<Action> Actions
+        public ObservableCollection<Action> Actions
         {
             get => User.Actions;
         }
         #endregion
+
+        #region ActionTypeImage
+        private string _ActionTypeImage;
+        public string ActionTypeImage
+        {
+            get => _ActionTypeImage;
+            set => Set(ref _ActionTypeImage, value);
+        }
+        #endregion
+
+
+        #region AddNew
+        public ICommand AddNew { get; }
+
+        private bool CanAddNew(object p) => true;
+        private void OnAddNew(object p)
+        {
+            //TODO: Add new action
+            User.Actions.Add(new Action(ActionType.Income, DateTime.UtcNow, Account.Cash, Category.Culture, 200));
+        }
+        #endregion
+
+        #region RemoveItem
+        public ICommand RemoveItem { get; }
+
+        private bool CanRemoveItem(object p) => true;
+        private void OnRemoveItem(object p)
+        {
+            var tmp = p as Action;
+            if (tmp != null)
+                User.Actions.Remove(tmp);
+        }
+        #endregion
+
 
         #region CloseWindow
         public ICommand CloseWindow { get; }

@@ -16,6 +16,7 @@
         WindowState="{Binding WindowState, Mode=TwoWay}">
     <Window.Resources>
         <crtr:ContentHeightConverter x:Key="ContentHeightConverter"/>
+        <crtr:ActionTypeImageConverter x:Key="ActionTypeImageConverter"/>
         <Style TargetType="materialDesign:Card">
             <Setter Property="BorderBrush" Value="#FF0000"/>
         </Style>
@@ -109,7 +110,7 @@
                                         <StackPanel Orientation="Vertical">
                                             <Grid Margin="20">
                                                 <TextBlock VerticalAlignment="Center" FontWeight="DemiBold" FontSize="18" Text="Latest actions"/>
-                                                <Button VerticalAlignment="Center" HorizontalAlignment="Right" >
+                                                <Button VerticalAlignment="Center" HorizontalAlignment="Right" Command="{Binding AddNew}">
                                                     <StackPanel Orientation="Horizontal">
                                                         <Canvas Height="25"  Width="25">
                                                             <Path Stroke="{DynamicResource MaterialDesignDarkForeground}" StrokeThickness="2">
@@ -127,7 +128,7 @@
                                                                 </Path.Data>
                                                             </Path>
                                                         </Canvas>
-                                                        <TextBlock Text="Add new" VerticalAlignment="Center"/>
+                                                        <TextBlock  Text="Add new" VerticalAlignment="Center"/>
                                                     </StackPanel>
                                                 </Button>
                                             </Grid>
@@ -137,24 +138,30 @@
                                                       ScrollViewer.CanContentScroll="False"
                                                       SelectionMode="Single"
                                                       VerticalContentAlignment="Top">
+                                                <ListView.ContextMenu>
+                                                    <ContextMenu>
+                                                        <MenuItem Header="Remove" Command="{Binding RemoveItem}" materialDesign:ShadowAssist.ShadowDepth="Depth2" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" /> 
+                                                    </ContextMenu>
+                                                </ListView.ContextMenu>
                                                 <ListView.ItemTemplate>
                                                     <DataTemplate x:Name="DoubleLineDataTemplate">
-                                                        <StackPanel Orientation="Horizontal" Height="64">
-                                                            <Ellipse Fill="Red" Height="48" Width="48" VerticalAlignment="Center">
-                                                                <!--<Ellipse.Fill>
-                                                                    <ImageBrush ImageSource="Placeholder.png"/>
-                                                                </Ellipse.Fill>-->
+                                                        <StackPanel Orientation="Horizontal" Height="64" HorizontalAlignment="Stretch">
+                                                            <Ellipse Height="48" Width="48" VerticalAlignment="Center">
+                                                                <Ellipse.Fill>
+                                                                    <!--<ImageBrush ImageSource="../Resources/Income.png"/>-->
+                                                                    <ImageBrush ImageSource="{Binding ActionTypeImage, Converter=ActionTypeImageConverter, ConverterParameter={Binding ActionType}}"/>
+                                                                </Ellipse.Fill>
                                                             </Ellipse>
                                                             <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="12,0,0,0">
                                                                 <StackPanel Orientation="Horizontal">
-                                                                    <TextBlock FontSize="15" Text="{Binding ActionType}"/>
-                                                                    <TextBlock FontSize="15" Text="{Binding Note}" Width="450"/>
-                                                                    <TextBlock FontSize="15" Text="{Binding Amount}" HorizontalAlignment="Right"/>
+                                                                    <TextBlock FontSize="16" Text="{Binding ActionType}" Margin="0, 0, 20, 0"/>
+                                                                    <TextBlock FontSize="16" Text="{Binding Note}" Width="430" Margin="0, 0, 20, 0"/>
+                                                                    <TextBlock FontSize="16" Text="{Binding Amount}" HorizontalAlignment="Right"/>
                                                                 </StackPanel>
                                                                 <StackPanel Orientation="Horizontal">
-                                                                    <TextBlock FontSize="13" Opacity=".6" Text="{Binding Category}"/>
-                                                                    <TextBlock FontSize="13" Opacity=".6" Text="{Binding Account}"/>
-                                                                    <TextBlock FontSize="13" Opacity=".6" Text="{Binding DateTime}"/>
+                                                                    <TextBlock FontSize="14" Opacity=".6" Text="{Binding Category}" Margin="0, 0, 20, 0"/>
+                                                                    <TextBlock FontSize="14" Opacity=".6" Text="{Binding Account}" Margin="0, 0, 20, 0"/>
+                                                                    <TextBlock FontSize="14" Opacity=".6" Text="{Binding DateTime}"/>
                                                                 </StackPanel>
                                                             </StackPanel>
                                                         </StackPanel>
