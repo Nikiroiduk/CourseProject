@@ -4,6 +4,7 @@ using CourseProjectBL.Services;
 using System;
 using System.Net;
 using System.Security;
+using Action = CourseProjectBL.Actions.Action;
 
 namespace CourseProjectViewConsole
 {
@@ -75,23 +76,19 @@ namespace CourseProjectViewConsole
                 {
                     case "1":
                         Console.WriteLine("Income action\n");
-                        user.Incomes.Add(new Income(DateTime.UtcNow, Account.Cash, Category.Food, 150));
+                        user.Actions.Add(new Action(ActionType.Income, DateTime.UtcNow, Account.Cash, Category.Food, 150));
                         dataServices.UpdateUserData(user);
                         break;
                     case "2":
                         Console.WriteLine("Expense action\n");
-                        user.Expenses.Add(new Expense(DateTime.UtcNow, Account.Cash, Category.Food, 150));
+                        user.Actions.Add(new Action(ActionType.Expense, DateTime.UtcNow, Account.Cash, Category.Food, 150));
                         dataServices.UpdateUserData(user);
                         break;
                     case "0":
 
-                        foreach (var item in user.Expenses)
+                        foreach (var item in user.Actions)
                         {
-                            Console.WriteLine($"spend {item.Amount} at {item.DateTime.Date}");
-                        }
-                        foreach (var item in user.Incomes)
-                        {
-                            Console.WriteLine($"get {item.Amount} at {item.DateTime.Date}");
+                            Console.WriteLine($"{item.ActionType}: {item.Amount} at {item.DateTime.Date}");
                         }
 
 

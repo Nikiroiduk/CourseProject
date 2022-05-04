@@ -3,7 +3,7 @@ using System;
 
 namespace CourseProjectBL.Actions
 {
-    public class Expense : IAction
+    public class Expense
     {
         public Expense()
         {

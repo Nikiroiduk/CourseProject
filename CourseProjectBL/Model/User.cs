@@ -2,6 +2,7 @@
 using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace CourseProjectBL.Model
 {
@@ -18,7 +19,9 @@ namespace CourseProjectBL.Model
         public string Login { get; set; }
         public string Password { get; set; }
 
-        public List<Income> Incomes { get; set; } = new List<Income>();
-        public List<Expense> Expenses { get; set; } = new List<Expense>();
+        public List<Actions.Action> Actions = new();
+
+        //public List<Income> Incomes { get; set; } = new List<Income>();
+        //public List<Expense> Expenses { get; set; } = new List<Expense>();
     }
 }

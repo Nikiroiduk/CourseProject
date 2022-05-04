@@ -107,8 +107,8 @@
                                 <materialDesign:Card Width="700" Height="370" materialDesign:ShadowAssist.ShadowDepth="Depth0" Margin="15">
                                     <Grid Margin="10">
                                         <StackPanel Orientation="Vertical">
-                                            <Grid Margin="10">
-                                                <TextBlock Margin="20, 0, 0, 0" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="18" Text="Latest actions"/>
+                                            <Grid Margin="20">
+                                                <TextBlock VerticalAlignment="Center" FontWeight="DemiBold" FontSize="18" Text="Latest actions"/>
                                                 <Button VerticalAlignment="Center" HorizontalAlignment="Right" >
                                                     <StackPanel Orientation="Horizontal">
                                                         <Canvas Height="25"  Width="25">
@@ -131,15 +131,35 @@
                                                     </StackPanel>
                                                 </Button>
                                             </Grid>
-                                            <ListView>
-                                                <ListView.View>
-                                                    <GridView>
-                                                        <GridViewColumn Width="200" Header="Test0"/>
-                                                        <GridViewColumn Width="200" Header="Test1"/>
-                                                        <GridViewColumn Width="200" Header="Test2"/>
-                                                        <GridViewColumn Width="200" Header="Test3"/>
-                                                    </GridView>
-                                                </ListView.View>
+                                            <ListView ItemsSource="{Binding Actions}"
+                                                      MaxHeight="270"
+                                                      materialDesign:ScrollViewerAssist.IsAutoHideEnabled="True"
+                                                      ScrollViewer.CanContentScroll="False"
+                                                      SelectionMode="Single"
+                                                      VerticalContentAlignment="Top">
+                                                <ListView.ItemTemplate>
+                                                    <DataTemplate x:Name="DoubleLineDataTemplate">
+                                                        <StackPanel Orientation="Horizontal" Height="64">
+                                                            <Ellipse Fill="Red" Height="48" Width="48" VerticalAlignment="Center">
+                                                                <!--<Ellipse.Fill>
+                                                                    <ImageBrush ImageSource="Placeholder.png"/>
+                                                                </Ellipse.Fill>-->
+                                                            </Ellipse>
+                                                            <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="12,0,0,0">
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <TextBlock FontSize="15" Text="{Binding ActionType}"/>
+                                                                    <TextBlock FontSize="15" Text="{Binding Note}" Width="450"/>
+                                                                    <TextBlock FontSize="15" Text="{Binding Amount}" HorizontalAlignment="Right"/>
+                                                                </StackPanel>
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <TextBlock FontSize="13" Opacity=".6" Text="{Binding Category}"/>
+                                                                    <TextBlock FontSize="13" Opacity=".6" Text="{Binding Account}"/>
+                                                                    <TextBlock FontSize="13" Opacity=".6" Text="{Binding DateTime}"/>
+                                                                </StackPanel>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ListView.ItemTemplate>
                                             </ListView>
                                         </StackPanel>
                                     </Grid>                                           

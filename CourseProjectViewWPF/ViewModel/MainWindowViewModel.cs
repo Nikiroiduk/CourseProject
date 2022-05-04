@@ -1,9 +1,13 @@
-﻿using CourseProjectBL.Model;
+﻿using CourseProjectBL.Enum;
+using CourseProjectBL.Model;
 using CourseProjectViewWPF.Commands;
 using CourseProjectViewWPF.Services;
 using CourseProjectViewWPF.View;
+using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
+using Action = CourseProjectBL.Actions.Action;
 
 namespace CourseProjectViewWPF.ViewModel
 {
@@ -19,8 +23,22 @@ namespace CourseProjectViewWPF.ViewModel
             MinimiseWindow = new LambdaCommand(OnMinimiseWindow, CanMinimiseWindow);
             FullScreenWindow = new LambdaCommand(OnFullScreenWindow, CanFullScreenWindow);
             #endregion
+
+
+            //test data
+            User.Actions.Add(new Action(ActionType.Income, DateTime.UtcNow, Account.Cash, Category.Food, 150, "Buy some food for week"));
+            User.Actions.Add(new Action(ActionType.Expense, DateTime.UtcNow, Account.Cash, Category.Food, 200));
+            User.Actions.Add(new Action(ActionType.Expense, DateTime.UtcNow, Account.Cash, Category.Food, 10));
+            User.Actions.Add(new Action(ActionType.Income, DateTime.UtcNow, Account.Cash, Category.Food, 300));
+            User.Actions.Add(new Action(ActionType.Income, DateTime.UtcNow, Account.Cash, Category.Food, 200));
         }
 
+        #region Actions
+        public List<Action> Actions
+        {
+            get => User.Actions;
+        }
+        #endregion
 
         #region CloseWindow
         public ICommand CloseWindow { get; }

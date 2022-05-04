@@ -3,14 +3,11 @@ using System;
 
 namespace CourseProjectBL.Actions
 {
-    public class Income
+    public class Action
     {
-        public Income()
+        public Action(ActionType actionType, DateTime dateTime, Account account, Category category, double amount, string note = "")
         {
-
-        }
-        public Income(DateTime dateTime, Account account, Category category, double amount, string note = "")
-        {
+            ActionType = actionType;
             DateTime = dateTime;
             Account = account;
             Category = category;
@@ -18,10 +15,12 @@ namespace CourseProjectBL.Actions
             Note = note;
         }
 
+        public ActionType ActionType { get; set; }
         public DateTime DateTime { get; set; }
         public Account Account { get; set; }
         public Category Category { get; set; }
         public double Amount { get; set; }
         public string Note { get; set; }
+
     }
 }
