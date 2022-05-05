@@ -8,7 +8,6 @@
         GBP,
         AUD,
         CAD,
-        CHF,
         CNY,
         HKD,
         NZD,

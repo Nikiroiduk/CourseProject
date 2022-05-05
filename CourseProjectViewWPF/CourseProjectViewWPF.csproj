@@ -9,6 +9,8 @@
   <ItemGroup>
     <None Remove="Resources\Expense.png" />
     <None Remove="Resources\Income.png" />
+    <None Remove="Resources\Settings.png" />
+    <None Remove="Resources\Total.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,6 +28,8 @@
   <ItemGroup>
     <Resource Include="Resources\Expense.png" />
     <Resource Include="Resources\Income.png" />
+    <Resource Include="Resources\Settings.png" />
+    <Resource Include="Resources\Total.png" />
   </ItemGroup>
 
 </Project>

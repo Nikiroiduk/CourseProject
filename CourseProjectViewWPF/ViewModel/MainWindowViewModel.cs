@@ -7,8 +7,13 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using Action = CourseProjectBL.Actions.Action;
+using System.Linq;
+using CourseProjectBL;
+using CourseProjectBL.Dictionary;
+using System.Collections.Specialized;
 
 namespace CourseProjectViewWPF.ViewModel
 {
@@ -27,6 +32,7 @@ namespace CourseProjectViewWPF.ViewModel
             RemoveItem = new LambdaCommand(OnRemoveItem, CanRemoveItem);
             #endregion
 
+            Actions.CollectionChanged += Actions_CollectionChanged;
 
             //test data
             User.Actions.Add(new Action(ActionType.Income, DateTime.UtcNow, Account.Cash, Category.Food, 150, "Buy some food for week"));
@@ -34,6 +40,11 @@ namespace CourseProjectViewWPF.ViewModel
             User.Actions.Add(new Action(ActionType.Expense, DateTime.UtcNow, Account.Cash, Category.Food, 10));
             User.Actions.Add(new Action(ActionType.Income, DateTime.UtcNow, Account.Cash, Category.Food, 300));
             User.Actions.Add(new Action(ActionType.Income, DateTime.UtcNow, Account.Cash, Category.Food, 200));
+        }
+
+        private void Actions_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            CalculateTotalValues();
         }
 
         #region Actions
@@ -48,9 +59,51 @@ namespace CourseProjectViewWPF.ViewModel
         public string ActionTypeImage
         {
             get => _ActionTypeImage;
-            set => Set(ref _ActionTypeImage, value);
         }
         #endregion
+
+
+        #region TotalIncome
+        private double _TotalIncome;
+        public double TotalIncome
+        {
+            get => _TotalIncome;
+            set => Set(ref _TotalIncome, value);
+        }
+        #endregion
+
+        #region TotalExpense
+        private double _TotalExpense;
+        public double TotalExpense
+        {
+            get => _TotalExpense;
+            set => Set(ref _TotalExpense, value);
+        }
+        #endregion
+
+        #region TotalSummary
+        private double _TotalSummary;
+        public double TotalSummary
+        {
+            get => _TotalSummary;
+            set => Set(ref _TotalSummary, value);
+        }
+        #endregion
+
+        #region CurrencySymbol;
+        public string CurrencySymbol
+        {
+            get => CurrencyDictionary.currencySymbolsDictionary[Settings.MainCurrency];
+            // TODO: Update when mainCurrency changed
+        }
+        #endregion
+
+        private void CalculateTotalValues()
+        {
+            TotalIncome = (from x in User.Actions where x.ActionType == ActionType.Income select x.Amount).Sum();
+            TotalExpense = (from x in User.Actions where x.ActionType == ActionType.Expense select x.Amount).Sum();
+            TotalSummary = TotalIncome - TotalExpense;
+        }
 
 
         #region AddNew
@@ -60,7 +113,7 @@ namespace CourseProjectViewWPF.ViewModel
         private void OnAddNew(object p)
         {
             //TODO: Add new action
-            User.Actions.Add(new Action(ActionType.Income, DateTime.UtcNow, Account.Cash, Category.Culture, 200));
+            User.Actions.Add(new Action(ActionType.Expense, DateTime.UtcNow, Account.Cash, Category.Culture, 200.11));
         }
         #endregion
 

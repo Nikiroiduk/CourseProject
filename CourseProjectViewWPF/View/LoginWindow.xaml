@@ -61,7 +61,7 @@
                     Style="{DynamicResource MaterialDesignFlatAccentButton}"
                     CommandParameter="{Binding ElementName=Window}">
                 <Canvas Height="25"  Width="25">
-                    <Path Stroke="Gray" StrokeThickness="2">
+                    <Path Stroke="#9A9AA9" StrokeThickness="2">
                         <Path.Data>
                             <PathGeometry>
                                 <PathGeometry.Figures>

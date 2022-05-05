@@ -17,16 +17,20 @@
     <Window.Resources>
         <crtr:ContentHeightConverter x:Key="ContentHeightConverter"/>
         <crtr:ActionTypeImageConverter x:Key="ActionTypeImageConverter"/>
+        <crtr:CurrencyConverter x:Key="CurrencyConverter"/>
         <Style TargetType="materialDesign:Card">
             <Setter Property="BorderBrush" Value="#FF0000"/>
         </Style>
     </Window.Resources>
-    <Border Background="#F1F4FA" CornerRadius="8">
+    <Border Background="#F1F4FA" CornerRadius="8" MouseDown="Border_MouseDown">
         <Grid>
             <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,0,0,20">
+                <Button Margin="0, 0, 30, 0" Width="50" Height="30" Style="{DynamicResource MaterialDesignFlatButton}">
+                    <Image Source="../Resources/Settings.png"/>
+                </Button>
                 <Button Command="{Binding MinimiseWindow}" Width="50" Height="30" Style="{DynamicResource MaterialDesignFlatButton}">
                     <Canvas Height="25"  Width="25">
-                        <Path Stroke="Gray" StrokeThickness="2">
+                        <Path Stroke="#9A9AA9" StrokeThickness="2">
                             <Path.Data>
                                 <PathGeometry>
                                     <PathGeometry.Figures>
@@ -41,7 +45,7 @@
                 </Button>
                 <Button Command="{Binding FullScreenWindow}" Width="50" Height="30" Style="{DynamicResource MaterialDesignFlatButton}">
                     <Canvas Height="25"  Width="25">
-                        <Path Stroke="Gray" StrokeThickness="2">
+                        <Path Stroke="#9A9AA9" StrokeThickness="2">
                             <Path.Data>
                                 <PathGeometry>
                                     <PathGeometry.Figures>
@@ -65,7 +69,7 @@
                 </Button>
                 <Button Command="{Binding CloseWindow}" CommandParameter="{Binding ElementName=Window}" Width="50" Height="30" Style="{DynamicResource MaterialDesignFlatAccentButton}">
                     <Canvas Height="25"  Width="25">
-                        <Path Stroke="Gray" StrokeThickness="2">
+                        <Path Stroke="#9A9AA9" StrokeThickness="2">
                             <Path.Data>
                                 <PathGeometry>
                                     <PathGeometry.Figures>
@@ -140,7 +144,9 @@
                                                       VerticalContentAlignment="Top">
                                                 <ListView.ContextMenu>
                                                     <ContextMenu>
-                                                        <MenuItem Header="Remove" Command="{Binding RemoveItem}" materialDesign:ShadowAssist.ShadowDepth="Depth2" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" /> 
+                                                        <MenuItem Header="Remove"
+                                                                  Command="{Binding RemoveItem}"
+                                                                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" /> 
                                                     </ContextMenu>
                                                 </ListView.ContextMenu>
                                                 <ListView.ItemTemplate>
@@ -148,8 +154,9 @@
                                                         <StackPanel Orientation="Horizontal" Height="64" HorizontalAlignment="Stretch">
                                                             <Ellipse Height="48" Width="48" VerticalAlignment="Center">
                                                                 <Ellipse.Fill>
-                                                                    <!--<ImageBrush ImageSource="../Resources/Income.png"/>-->
-                                                                    <ImageBrush ImageSource="{Binding ActionTypeImage, Converter=ActionTypeImageConverter, ConverterParameter={Binding ActionType}}"/>
+                                                                    <ImageBrush ImageSource="../Resources/Income.png"/>
+                                                                    <!--TODO: different images for each action type-->
+                                                                    <!--<ImageBrush ImageSource="{Binding ActionTypeImage}"/>-->
                                                                 </Ellipse.Fill>
                                                             </Ellipse>
                                                             <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="12,0,0,0">
@@ -182,30 +189,39 @@
                                 </materialDesign:Card>
                             </WrapPanel>
                             <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Orientation="Horizontal">
-                                <materialDesign:Card Margin="0,0,30,0" materialDesign:ShadowAssist.ShadowDepth="Depth0" Width="200" Padding="30" Background="White" UniformCornerRadius="10">
+                                <materialDesign:Card Margin="0,0,30,0" materialDesign:ShadowAssist.ShadowDepth="Depth0" Width="230" Padding="20, 30, 20, 30" Background="White" UniformCornerRadius="10">
                                     <StackPanel Orientation="Horizontal">
-                                        <Rectangle Width="60" Height="60" Fill="#ffaa00"/>
+                                        <Image Width="60" Height="60" Source="../Resources/Income.png"/>
                                         <StackPanel Margin="30,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical">
-                                            <TextBlock FontSize="22" FontWeight="DemiBold" Text="380$"/>
-                                            <TextBlock FontSize="14" Text="Income"/>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock FontSize="22" FontWeight="DemiBold" Foreground="#06152B" Text="{Binding CurrencySymbol}" Margin="0, 0, 5, 0"/>
+                                                <TextBlock FontSize="22" FontWeight="DemiBold" Foreground="#06152B" Text="{Binding TotalIncome, StringFormat={}{0:#,#.00}}"/>
+                                            </StackPanel>
+                                            <TextBlock FontSize="15" Opacity=".6" Text="Income"/>
                                         </StackPanel>
                                     </StackPanel>
                                 </materialDesign:Card>
-                                <materialDesign:Card Margin="0,0,30,0" materialDesign:ShadowAssist.ShadowDepth="Depth0" Width="200" Background="White" UniformCornerRadius="10">
+                                <materialDesign:Card Margin="0,0,30,0" materialDesign:ShadowAssist.ShadowDepth="Depth0" Width="230" Padding="20, 30, 20, 30" Background="White" UniformCornerRadius="10">
                                     <StackPanel Orientation="Horizontal">
-                                        <Rectangle Width="60" Height="60" Fill="#ffaa00" Margin="20,0,0,0"/>
+                                        <Image Width="60" Height="60" Source="../Resources/Expense.png"/>
                                         <StackPanel Margin="20,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical">
-                                            <TextBlock FontSize="22" FontWeight="DemiBold" Text="380$"/>
-                                            <TextBlock FontSize="14" Text="Income"/>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock FontSize="22" FontWeight="DemiBold" Foreground="#06152B" Text="{Binding CurrencySymbol}" Margin="0, 0, 5, 0"/>
+                                                <TextBlock FontSize="22" FontWeight="DemiBold" Foreground="#06152B" Text="{Binding TotalExpense, StringFormat={}{0:#,#.00}}"/>
+                                            </StackPanel>
+                                            <TextBlock FontSize="15" Opacity=".6" Text="Expense"/>
                                         </StackPanel>
                                     </StackPanel>
                                 </materialDesign:Card>
-                                <materialDesign:Card Margin="0,0,0,0" materialDesign:ShadowAssist.ShadowDepth="Depth0" Width="200" Background="White" UniformCornerRadius="10">
+                                <materialDesign:Card Margin="0,0,0,0" materialDesign:ShadowAssist.ShadowDepth="Depth0" Width="230" Padding="20, 30, 20, 30" Background="White" UniformCornerRadius="10">
                                     <StackPanel Orientation="Horizontal">
-                                        <Rectangle Width="60" Height="60" Fill="#ffaa00" Margin="20,0,0,0"/>
+                                        <Image Width="60" Height="60" Source="../Resources/Total.png"/>
                                         <StackPanel Margin="20,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical">
-                                            <TextBlock FontSize="22" FontWeight="DemiBold" Text="380$"/>
-                                            <TextBlock FontSize="14" Text="Income"/>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock FontSize="22" FontWeight="DemiBold" Foreground="#06152B" Text="{Binding CurrencySymbol}" Margin="0, 0, 5, 0"/>
+                                                <TextBlock FontSize="22" FontWeight="DemiBold" Foreground="#06152B" Text="{Binding TotalSummary, StringFormat={}{0:#,#.00}}"/>
+                                            </StackPanel>
+                                            <TextBlock FontSize="15" Opacity=".6" Text="Summary"/>
                                         </StackPanel>
                                     </StackPanel>
                                 </materialDesign:Card>
