@@ -20,6 +20,8 @@ namespace CourseProjectViewWPF.ViewModel
     public class MainWindowViewModel : ViewModel
     {
         private User User { get; set; }
+
+        private readonly DialogVisitor Visitor = new();
         public MainWindowViewModel(User User)
         {
             this.User = User;
@@ -30,16 +32,10 @@ namespace CourseProjectViewWPF.ViewModel
             FullScreenWindow = new LambdaCommand(OnFullScreenWindow, CanFullScreenWindow);
             AddNew = new LambdaCommand(OnAddNew, CanAddNew);
             RemoveItem = new LambdaCommand(OnRemoveItem, CanRemoveItem);
+            ChangeItem = new LambdaCommand(OnChangeItem, CanChangeItem);
             #endregion
 
             Actions.CollectionChanged += Actions_CollectionChanged;
-
-            //test data
-            User.Actions.Add(new Action(ActionType.Income, DateTime.UtcNow, Account.Cash, Category.Food, 150, "Buy some food for week"));
-            User.Actions.Add(new Action(ActionType.Expense, DateTime.UtcNow, Account.Cash, Category.Food, 200));
-            User.Actions.Add(new Action(ActionType.Expense, DateTime.UtcNow, Account.Cash, Category.Food, 10));
-            User.Actions.Add(new Action(ActionType.Income, DateTime.UtcNow, Account.Cash, Category.Food, 300));
-            User.Actions.Add(new Action(ActionType.Income, DateTime.UtcNow, Account.Cash, Category.Food, 200));
         }
 
         private void Actions_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -51,17 +47,9 @@ namespace CourseProjectViewWPF.ViewModel
         public ObservableCollection<Action> Actions
         {
             get => User.Actions;
+            //TotalIncome = (from x in User.Actions where x.ActionType == ActionType.Income select x.Amount).Sum();
         }
         #endregion
-
-        #region ActionTypeImage
-        private string _ActionTypeImage;
-        public string ActionTypeImage
-        {
-            get => _ActionTypeImage;
-        }
-        #endregion
-
 
         #region TotalIncome
         private double _TotalIncome;
@@ -90,6 +78,40 @@ namespace CourseProjectViewWPF.ViewModel
         }
         #endregion
 
+        #region StartDate
+        private DateTime _StartDate = DateTime.Now;
+        public DateTime StartDate
+        {
+            get => _StartDate;
+            //set => Set(ref _StartDate, value);
+            set
+            {
+                Set(ref _StartDate, value);
+                //TODO: Add event listener
+                dateChanged();
+            }
+        }
+
+        private void dateChanged()
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+        #region EndDate
+        private DateTime _EndDate = DateTime.Now;
+        public DateTime EndDate
+        {
+            get => _EndDate;
+            //set => Set(ref _EndDate, value);
+            set
+            {
+                Set(ref _EndDate, value);
+                dateChanged();
+            }
+        }
+        #endregion
+
         #region CurrencySymbol;
         public string CurrencySymbol
         {
@@ -112,8 +134,11 @@ namespace CourseProjectViewWPF.ViewModel
         private bool CanAddNew(object p) => true;
         private void OnAddNew(object p)
         {
-            //TODO: Add new action
-            User.Actions.Add(new Action(ActionType.Expense, DateTime.UtcNow, Account.Cash, Category.Culture, 200.11));
+            Action action = new();
+            action = Visitor.DynamicVisit(action) as Action;
+            if (action == null || action.Amount <= 0)
+                return;
+            User.Actions.Add(action);
         }
         #endregion
 
@@ -126,6 +151,25 @@ namespace CourseProjectViewWPF.ViewModel
             var tmp = p as Action;
             if (tmp != null)
                 User.Actions.Remove(tmp);
+        }
+        #endregion
+
+        #region ChangeItem
+        public ICommand ChangeItem { get; }
+
+        private bool CanChangeItem(object p) => true;
+        private void OnChangeItem(object p)
+        {
+
+            var action = p as Action;
+            var index = User.Actions.IndexOf(action);
+            action = Visitor.DynamicVisit(action) as Action;
+            if (action == null || action.Amount <= 0)
+                return;
+
+            //TODO: ugh must be rewritten in some other way
+            User.Actions.Insert(index, action);
+            User.Actions.RemoveAt(index);
         }
         #endregion
 

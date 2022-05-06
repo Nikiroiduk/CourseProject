@@ -3,6 +3,7 @@
     public enum Category
     {
         Food,
+        Salary,
         SocialLife,
         SelfDevelopment,
         Transportation,

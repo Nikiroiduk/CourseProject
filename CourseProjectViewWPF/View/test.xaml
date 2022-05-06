@@ -5,21 +5,67 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CourseProjectViewWPF.View"
         mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Title="test" Height="600" Width="800">
-    <Grid>
-        <ScrollViewer>
-            <Grid>
-                <WrapPanel Margin="0, 120, 0, 0" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Rectangle Margin="30" Width="600" Height="400" Fill="#FFAA00"/>
-                    <Rectangle Margin="30" Width="600" Height="400" Fill="#FFAA00"/>
-                    <Rectangle Margin="30" Width="600" Height="400" Fill="#FFAA00"/>
-                </WrapPanel>
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
-                    <Rectangle Fill="#FFAA00" Width="200" Height="100" Margin="10"/>
-                    <Rectangle Fill="#FFAA00" Width="200" Height="100" Margin="10"/>
-                    <Rectangle Fill="#FFAA00" Width="200" Height="100" Margin="10"/>
+    <StackPanel>
+        <StackPanel Orientation="Horizontal" Height="64" HorizontalAlignment="Stretch">
+            <Ellipse Height="48" Width="48" VerticalAlignment="Center">
+                <Ellipse.Fill>
+                    <ImageBrush ImageSource="../Resources/Income.png"/>
+                </Ellipse.Fill>
+            </Ellipse>
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="12,0,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock FontSize="16" Text="Income" Margin="0, 0, 20, 0"/>
+                    <TextBlock FontSize="16" Text="Text of note for money action" Width="430" Margin="0, 0, 20, 0"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock FontSize="16" Text="14.88" HorizontalAlignment="Right"/>
+                        <TextBlock FontSize="16" Margin="10, 0, 0, 0" Text="$" HorizontalAlignment="Right"/>
+                    </StackPanel>
                 </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock FontSize="14" Opacity=".6" Text="Food" Margin="0, 0, 20, 0"/>
+                    <TextBlock FontSize="14" Opacity=".6" Text="Cash" Margin="0, 0, 20, 0"/>
+                    <TextBlock FontSize="14" Opacity=".6" Text="06/05/2022 12:31 PM"/>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Height="64" HorizontalAlignment="Stretch">
+            <Ellipse Height="48" Width="48" VerticalAlignment="Center">
+                <Ellipse.Fill>
+                    <ImageBrush ImageSource="../Resources/Income.png"/>
+                </Ellipse.Fill>
+            </Ellipse>
+            <Grid Margin="12, 0, 0, 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" FontSize="16" Text="Income" Margin="0, 0, 20, 0"/>
+                    <TextBlock Grid.Column="1" FontSize="16" Text="Text of note for money action" Width="430"/>
+                    <StackPanel Margin="5" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock FontSize="16" Text="14.88" VerticalAlignment="Center"/>
+                        <TextBlock FontSize="16" Margin="10, 0, 0, 0" Text="$" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" FontSize="14" Opacity=".6" Text="Food"/>
+                    <TextBlock Grid.Column="1" FontSize="14" Opacity=".6" Text="Cash"/>
+                    <TextBlock Grid.Column="2" FontSize="14" Opacity=".6" Text="06/05/2022 12:31 PM"/>
+                </Grid>
             </Grid>
-        </ScrollViewer>
-    </Grid>
+        </StackPanel>
+    </StackPanel>
 </Window>

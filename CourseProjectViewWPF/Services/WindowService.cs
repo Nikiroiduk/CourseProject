@@ -2,6 +2,7 @@
 using CourseProjectBL.Model;
 using CourseProjectViewWPF.View;
 using CourseProjectViewWPF.ViewModel;
+using System;
 using System.Windows;
 
 namespace CourseProjectViewWPF.Services

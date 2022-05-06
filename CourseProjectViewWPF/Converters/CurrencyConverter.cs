@@ -1,4 +1,6 @@
-﻿using CourseProjectBL.Enum;
+﻿using CourseProjectBL;
+using CourseProjectBL.Dictionary;
+using CourseProjectBL.Enum;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -13,19 +15,11 @@ namespace CourseProjectViewWPF.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is string meh)
-            {
-                return meh;
-            }
-            return "";
+            return $"{CurrencyDictionary.currencySymbolsDictionary[Settings.MainCurrency]} {value}";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is string meh)
-            {
-                return meh;
-            }
             return "";
         }
     }

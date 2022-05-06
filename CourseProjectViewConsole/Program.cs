@@ -98,10 +98,6 @@ namespace CourseProjectViewConsole
                         break;
                 }
             }
-
-
-
-
         }
     }
 }

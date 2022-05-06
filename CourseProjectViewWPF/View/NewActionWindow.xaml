@@ -1,0 +1,73 @@
+﻿<Window x:Class="CourseProjectViewWPF.View.NewActionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CourseProjectViewWPF.ViewModel"
+        xmlns:enum="clr-namespace:CourseProjectBL.Enum;assembly=CourseProjectBL"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="NewActionWindow" Height="300" Width="800"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent">
+    <Window.Resources>
+        <ObjectDataProvider x:Key="enumAccount"
+            MethodName="GetValues" ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="enum:Account"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider x:Key="enumCategory"
+            MethodName="GetValues" ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="enum:Category"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider x:Key="enumActionType"
+            MethodName="GetValues" ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="enum:ActionType"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <Style TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignOutlinedComboBox}">
+            <Setter Property="materialDesign:HintAssist.HelperTextFontSize" Value="14"/>
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+        <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="materialDesign:HintAssist.HelperTextFontSize" Value="14"/>
+        </Style>
+        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatMidBgButton}">
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="40"/>
+        </Style>
+    </Window.Resources>
+    <Border Background="#F1F4FA" CornerRadius="8" MouseDown="Border_MouseDown">
+        <StackPanel Orientation="Vertical" Margin="40">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <ComboBox Margin="0, 0, 20, 30" Grid.Column="0" materialDesign:HintAssist.HelperText="Account" ItemsSource="{Binding Source={StaticResource enumAccount}}" SelectedValue="{Binding Path=Account}"/>
+                <ComboBox Margin="20, 0, 20, 30" Grid.Column="1" materialDesign:HintAssist.HelperText="Action type" ItemsSource="{Binding Source={StaticResource enumActionType}}" SelectedValue="{Binding Path=ActionType}"/>
+                <ComboBox Margin="20, 0, 0, 30" Grid.Column="2" materialDesign:HintAssist.HelperText="Category" ItemsSource="{Binding Source={StaticResource enumCategory}}" SelectedValue="{Binding Path=Category}"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0" Margin="0, 0, 20, 20" materialDesign:HintAssist.HelperText="Amount" Text="{Binding Path = Amount}"/>
+                <TextBox Grid.Column="1" Margin="20, 0, 0, 20" materialDesign:HintAssist.HelperText="Note" Text="{Binding Path = Note}"/>
+            </Grid>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 20, 0, 0">
+                <Button Margin="0, 0, 20, 0" Content="Ok" Click="OkButton_Click"/>
+                <Button Margin="20, 0, 0, 0" Content="Cancel" Click="CancelButton_Click"/>
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</Window>
