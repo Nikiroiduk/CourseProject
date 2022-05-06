@@ -17,8 +17,8 @@ namespace CourseProjectViewWPF
     {
         public App()
         {
-            WindowService win = new();
-            win.CreateWindow(new User());
+            //WindowService win = new();
+            //win.CreateWindow(new User());
         }
     }
 }

@@ -13,7 +13,10 @@ using Action = CourseProjectBL.Actions.Action;
 using System.Linq;
 using CourseProjectBL;
 using CourseProjectBL.Dictionary;
+using CourseProjectBL.Services;
 using System.Collections.Specialized;
+using System.Windows.Data;
+using System.ComponentModel;
 
 namespace CourseProjectViewWPF.ViewModel
 {
@@ -22,6 +25,8 @@ namespace CourseProjectViewWPF.ViewModel
         private User User { get; set; }
 
         private readonly DialogVisitor Visitor = new();
+
+        private readonly DataServices DataService = new();
         public MainWindowViewModel(User User)
         {
             this.User = User;
@@ -36,6 +41,7 @@ namespace CourseProjectViewWPF.ViewModel
             #endregion
 
             Actions.CollectionChanged += Actions_CollectionChanged;
+            DatePropertyChanged();
         }
 
         private void Actions_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -44,10 +50,9 @@ namespace CourseProjectViewWPF.ViewModel
         }
 
         #region Actions
-        public ObservableCollection<Action> Actions
+        public ICollectionView Actions
         {
-            get => User.Actions;
-            //TotalIncome = (from x in User.Actions where x.ActionType == ActionType.Income select x.Amount).Sum();
+            get => CollectionViewSource.GetDefaultView(User.Actions);
         }
         #endregion
 
@@ -83,18 +88,26 @@ namespace CourseProjectViewWPF.ViewModel
         public DateTime StartDate
         {
             get => _StartDate;
-            //set => Set(ref _StartDate, value);
             set
             {
                 Set(ref _StartDate, value);
-                //TODO: Add event listener
-                dateChanged();
+                DatePropertyChanged();
             }
         }
 
-        private void dateChanged()
+        #endregion
+
+        #region DatePropertyChanged
+        private void DatePropertyChanged()
         {
-            throw new NotImplementedException();
+            Actions.Filter = item =>
+            {
+                Action action = item as Action;
+                if (action == null) return false;
+
+                return action.DateTime.Date >= StartDate.Date && action.DateTime.Date <= EndDate.Date;
+
+            };
         }
         #endregion
 
@@ -103,11 +116,10 @@ namespace CourseProjectViewWPF.ViewModel
         public DateTime EndDate
         {
             get => _EndDate;
-            //set => Set(ref _EndDate, value);
             set
             {
                 Set(ref _EndDate, value);
-                dateChanged();
+                DatePropertyChanged();
             }
         }
         #endregion
@@ -180,6 +192,7 @@ namespace CourseProjectViewWPF.ViewModel
         private bool CanCloseWindow(object p) => true;
         private void OnCloseWindow(object p)
         {
+            DataService.UpdateUserData(User);
             var win = p as Window;
             win.Close();
         }
