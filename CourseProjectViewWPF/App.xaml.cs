@@ -1,5 +1,7 @@
 ﻿using CourseProjectBL.Model;
+using CourseProjectBL.Services;
 using CourseProjectViewWPF.Services;
+using CourseProjectViewWPF.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -17,8 +19,12 @@ namespace CourseProjectViewWPF
     {
         public App()
         {
-            //WindowService win = new();
-            //win.CreateWindow(new User());
+            LoginWindowViewModel loginWindowViewModel = new();
+            loginWindowViewModel.Login = "Nikiroiduk";
+            loginWindowViewModel.Password = "k.lbr040880";
+            var user = AuthService.Auth(loginWindowViewModel.Login, loginWindowViewModel.Password);
+            WindowService windowService = new();
+            windowService.CreateWindow(user);
         }
     }
 }

@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:helper="clr-namespace:CourseProjectViewWPF.View.MainWindowHelper"
         xmlns:crtr="clr-namespace:CourseProjectViewWPF.Converters"
         mc:Ignorable="d"
         Title="MainWindow" MinHeight="700" MinWidth="800"
@@ -16,8 +17,6 @@
         WindowState="{Binding WindowState, Mode=TwoWay}">
     <Window.Resources>
         <crtr:ContentHeightConverter x:Key="ContentHeightConverter"/>
-        <crtr:ActionTypeImageConverter x:Key="ActionTypeImageConverter"/>
-        <crtr:CurrencyConverter x:Key="CurrencyConverter"/>
         <Style TargetType="materialDesign:Card">
             <Setter Property="BorderBrush" Value="#FF0000"/>
         </Style>
@@ -102,93 +101,9 @@
                         <Grid Margin="0, 0, 10, 0">
                             <WrapPanel HorizontalAlignment="Center" Margin="0, 150, 0, 0">
                                 <materialDesign:Card Width="700" Height="370" materialDesign:ShadowAssist.ShadowDepth="Depth0" Margin="15">
-                                    <Grid Margin="10">
-                                        <StackPanel Orientation="Vertical">
-                                            <Grid Margin="20">
-                                                <TextBlock VerticalAlignment="Center" FontWeight="DemiBold" FontSize="18" Text="Latest actions"/>
-                                                <Button VerticalAlignment="Center" HorizontalAlignment="Right" Command="{Binding AddNew}">
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <Canvas Height="25"  Width="25">
-                                                            <Path Stroke="{DynamicResource MaterialDesignDarkForeground}" StrokeThickness="2">
-                                                                <Path.Data>
-                                                                    <PathGeometry>
-                                                                        <PathGeometry.Figures>
-                                                                            <PathFigure StartPoint="1,12">
-                                                                                <LineSegment Point="13,12"/>
-                                                                            </PathFigure>
-                                                                            <PathFigure StartPoint="7,6">
-                                                                                <LineSegment Point="7,18"/>
-                                                                            </PathFigure>
-                                                                        </PathGeometry.Figures>
-                                                                    </PathGeometry>
-                                                                </Path.Data>
-                                                            </Path>
-                                                        </Canvas>
-                                                        <TextBlock  Text="Add new" VerticalAlignment="Center"/>
-                                                    </StackPanel>
-                                                </Button>
-                                            </Grid>
-                                            <ListView ItemsSource="{Binding Actions}"
-                                                      MaxHeight="270"
-                                                      materialDesign:ScrollViewerAssist.IsAutoHideEnabled="True"
-                                                      ScrollViewer.CanContentScroll="False"
-                                                      SelectionMode="Single"
-                                                      VerticalContentAlignment="Top"
-                                                      ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                                                <ListView.ContextMenu>
-                                                    <ContextMenu Background="White" HasDropShadow="False">
-                                                        <MenuItem Header="Remove"
-                                                                  Command="{Binding RemoveItem}"
-                                                                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
-                                                        <MenuItem Header="Change"
-                                                                  Command="{Binding ChangeItem}"
-                                                                  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
-                                                    </ContextMenu>
-                                                </ListView.ContextMenu>
-                                                <ListView.ItemTemplate>
-                                                    <DataTemplate x:Name="DoubleLineDataTemplate">
-                                                        <StackPanel Orientation="Horizontal" Height="64" HorizontalAlignment="Stretch">
-                                                            <Ellipse Height="48" Width="48" VerticalAlignment="Center">
-                                                                <Ellipse.Fill>
-                                                                    <ImageBrush ImageSource="{Binding ActionType, Converter={StaticResource ActionTypeImageConverter}}"/>
-                                                                </Ellipse.Fill>
-                                                            </Ellipse>
-                                                            <Grid Margin="12, 0, 0, 0">
-                                                                <Grid.RowDefinitions>
-                                                                    <RowDefinition/>
-                                                                    <RowDefinition/>
-                                                                </Grid.RowDefinitions>
-                                                                <Grid Grid.Row="0" Grid.RowSpan="2">
-                                                                    <Grid.ColumnDefinitions>
-                                                                        <ColumnDefinition Width="80"/>
-                                                                        <ColumnDefinition Width="390"/>
-                                                                        <ColumnDefinition/>
-                                                                    </Grid.ColumnDefinitions>
-                                                                    <TextBlock VerticalAlignment="Top" Grid.Column="0" FontSize="16" Text="{Binding ActionType}" Margin="0, 0, 20, 0"/>
-                                                                    <TextBlock VerticalAlignment="Top" Grid.Column="1" FontSize="16" Text="{Binding Note}" Margin="0, 0, 30, 0"/>
-                                                                    <TextBlock Grid.Column="2" FontSize="16" Text="{Binding Amount, Converter={StaticResource CurrencyConverter}}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                                                                </Grid>
-                                                                <Grid Grid.Row="1">
-                                                                    <Grid.ColumnDefinitions>
-                                                                        <ColumnDefinition/>
-                                                                        <ColumnDefinition/>
-                                                                        <ColumnDefinition/>
-                                                                        <ColumnDefinition Width="3*"/>
-                                                                    </Grid.ColumnDefinitions>
-                                                                    <TextBlock Grid.Column="0" FontSize="14" Opacity=".6" Text="{Binding Category}"/>
-                                                                    <TextBlock Grid.Column="1" FontSize="14" Opacity=".6" Text="{Binding Account}"/>
-                                                                    <TextBlock Grid.Column="2" FontSize="14" Opacity=".6" Text="{Binding DateTime}"/>
-                                                                </Grid>
-                                                            </Grid>
-                                                        </StackPanel>
-                                                    </DataTemplate>
-                                                </ListView.ItemTemplate>
-                                            </ListView>
-                                        </StackPanel>
-                                    </Grid>                                           
+                                    <helper:LatestActions/>
                                 </materialDesign:Card>
                                 <materialDesign:Card Width="700" Height="370" materialDesign:ShadowAssist.ShadowDepth="Depth0" Margin="15">
-
                                 </materialDesign:Card>
                                 <materialDesign:Card Width="700" Height="370" materialDesign:ShadowAssist.ShadowDepth="Depth0" Margin="15">
 

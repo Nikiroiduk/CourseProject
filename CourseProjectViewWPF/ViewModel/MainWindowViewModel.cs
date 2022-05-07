@@ -2,12 +2,8 @@
 using CourseProjectBL.Model;
 using CourseProjectViewWPF.Commands;
 using CourseProjectViewWPF.Services;
-using CourseProjectViewWPF.View;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using Action = CourseProjectBL.Actions.Action;
 using System.Linq;
@@ -47,6 +43,7 @@ namespace CourseProjectViewWPF.ViewModel
         private void Actions_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             CalculateTotalValues();
+            DataService.UpdateUserData(User);
         }
 
         #region Actions
@@ -100,11 +97,11 @@ namespace CourseProjectViewWPF.ViewModel
         #region DatePropertyChanged
         private void DatePropertyChanged()
         {
+            Actions.SortDescriptions.Add(new SortDescription("DateTime", ListSortDirection.Descending));
             Actions.Filter = item =>
             {
                 Action action = item as Action;
                 if (action == null) return false;
-
                 return action.DateTime.Date >= StartDate.Date && action.DateTime.Date <= EndDate.Date;
 
             };
@@ -134,8 +131,8 @@ namespace CourseProjectViewWPF.ViewModel
 
         private void CalculateTotalValues()
         {
-            TotalIncome = (from x in User.Actions where x.ActionType == ActionType.Income select x.Amount).Sum();
-            TotalExpense = (from x in User.Actions where x.ActionType == ActionType.Expense select x.Amount).Sum();
+            TotalIncome = (from x in Actions.OfType<Action>() where x.ActionType == ActionType.Income select x.Amount).Sum();
+            TotalExpense = (from x in Actions.OfType<Action>() where x.ActionType == ActionType.Expense select x.Amount).Sum();
             TotalSummary = TotalIncome - TotalExpense;
         }
 
@@ -192,7 +189,6 @@ namespace CourseProjectViewWPF.ViewModel
         private bool CanCloseWindow(object p) => true;
         private void OnCloseWindow(object p)
         {
-            DataService.UpdateUserData(User);
             var win = p as Window;
             win.Close();
         }

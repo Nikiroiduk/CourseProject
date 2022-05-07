@@ -8,7 +8,7 @@
         xmlns:System="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="NewActionWindow" Height="300" Width="800"
+        Title="NewActionWindow" Height="400" Width="800"
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent">
@@ -46,28 +46,33 @@
     </Window.Resources>
     <Border Background="#F1F4FA" CornerRadius="8" MouseDown="Border_MouseDown">
         <StackPanel Orientation="Vertical" Margin="40">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <ComboBox Margin="0, 0, 20, 30" Grid.Column="0" materialDesign:HintAssist.HelperText="Account" ItemsSource="{Binding Source={StaticResource enumAccount}}" SelectedValue="{Binding Path=Account}"/>
-                <ComboBox Margin="20, 0, 20, 30" Grid.Column="1" materialDesign:HintAssist.HelperText="Action type" ItemsSource="{Binding Source={StaticResource enumActionType}}" SelectedValue="{Binding Path=ActionType}"/>
-                <ComboBox Margin="20, 0, 0, 30" Grid.Column="2" materialDesign:HintAssist.HelperText="Category" ItemsSource="{Binding Source={StaticResource enumCategory}}" SelectedValue="{Binding Path=Category}"/>
-            </Grid>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="2*"/>
-                </Grid.ColumnDefinitions>
-                <TextBox Grid.Column="0" Margin="0, 0, 20, 20" materialDesign:HintAssist.HelperText="Amount" Text="{Binding Path = Amount}"/>
-                <TextBox Grid.Column="1" Margin="20, 0, 0, 20" materialDesign:HintAssist.HelperText="Note" Text="{Binding Path = Note}"/>
-            </Grid>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 20, 0, 0">
-                <Button Margin="0, 0, 20, 0" Content="Ok" Click="OkButton_Click"/>
-                <Button Margin="20, 0, 0, 0" Content="Cancel" Click="CancelButton_Click"/>
-            </StackPanel>
+            <Label Content="Adding new action" FontSize="26" FontWeight="Bold" Margin="0, 0, 0, 20"/>
+            <materialDesign:Card Padding="20" materialDesign:ShadowAssist.ShadowDepth="Depth0">
+                <StackPanel Orientation="Vertical">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <ComboBox Margin="0, 0, 20, 30" Grid.Column="0" materialDesign:HintAssist.HelperText="Account" ItemsSource="{Binding Source={StaticResource enumAccount}}" SelectedValue="{Binding Path=Account}"/>
+                        <ComboBox Margin="20, 0, 20, 30" Grid.Column="1" materialDesign:HintAssist.HelperText="Action type" ItemsSource="{Binding Source={StaticResource enumActionType}}" SelectedValue="{Binding Path=ActionType}"/>
+                        <ComboBox Margin="20, 0, 0, 30" Grid.Column="2" materialDesign:HintAssist.HelperText="Category" ItemsSource="{Binding Source={StaticResource enumCategory}}" SelectedValue="{Binding Path=Category}"/>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Grid.Column="0" Margin="0, 0, 20, 20" materialDesign:HintAssist.HelperText="Amount" Text="{Binding Path = Amount}"/>
+                        <TextBox Grid.Column="1" Margin="20, 0, 0, 20" materialDesign:HintAssist.HelperText="Note" Text="{Binding Path = Note}"/>
+                    </Grid>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 20, 0, 0">
+                            <Button Margin="0, 0, 20, 0" Content="Add" Click="OkButton_Click"/>
+                            <Button Margin="20, 0, 0, 0" Content="Cancel" Click="CancelButton_Click"/>
+                        </StackPanel>   
+                </StackPanel>
+            </materialDesign:Card>
         </StackPanel>
     </Border>
 </Window>
