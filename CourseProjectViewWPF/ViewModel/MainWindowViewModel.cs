@@ -14,6 +14,9 @@ using System.Collections.Specialized;
 using System.Windows.Data;
 using System.ComponentModel;
 
+using LiveCharts;
+using LiveCharts.Wpf;
+
 namespace CourseProjectViewWPF.ViewModel
 {
     public class MainWindowViewModel : ViewModel

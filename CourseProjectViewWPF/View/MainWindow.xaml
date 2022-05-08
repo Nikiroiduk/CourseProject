@@ -14,7 +14,8 @@
         AllowsTransparency="True"
         Background="Transparent"
         x:Name="Window"
-        WindowState="{Binding WindowState, Mode=TwoWay}">
+        WindowState="{Binding WindowState, Mode=TwoWay}"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf">
     <Window.Resources>
         <crtr:ContentHeightConverter x:Key="ContentHeightConverter"/>
         <Style TargetType="materialDesign:Card">
@@ -104,6 +105,9 @@
                                     <helper:LatestActions/>
                                 </materialDesign:Card>
                                 <materialDesign:Card Width="700" Height="370" materialDesign:ShadowAssist.ShadowDepth="Depth0" Margin="15">
+                                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                        <lvc:CartesianChart Series="{Binding SeriesCollection, UpdateSourceTrigger=PropertyChanged}" Margin="20" Background="Gray"/>
+                                    </Grid>
                                 </materialDesign:Card>
                                 <materialDesign:Card Width="700" Height="370" materialDesign:ShadowAssist.ShadowDepth="Depth0" Margin="15">
 
