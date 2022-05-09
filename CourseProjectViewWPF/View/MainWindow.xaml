@@ -6,7 +6,9 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:helper="clr-namespace:CourseProjectViewWPF.View.MainWindowHelper"
         xmlns:crtr="clr-namespace:CourseProjectViewWPF.Converters"
+        xmlns:viewmodel="clr-namespace:CourseProjectViewWPF.ViewModel"
         mc:Ignorable="d"
+        d:Height="2000"
         Title="MainWindow" MinHeight="700" MinWidth="800"
         Height="700" Width="800"
         ShowInTaskbar="True"
@@ -15,12 +17,9 @@
         Background="Transparent"
         x:Name="Window"
         WindowState="{Binding WindowState, Mode=TwoWay}"
-        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf">
+        d:DataContext="{d:DesignInstance Type=viewmodel:MainWindowViewModel}">
     <Window.Resources>
         <crtr:ContentHeightConverter x:Key="ContentHeightConverter"/>
-        <Style TargetType="materialDesign:Card">
-            <Setter Property="BorderBrush" Value="#FF0000"/>
-        </Style>
     </Window.Resources>
     <Border Background="#F1F4FA" CornerRadius="8" MouseDown="Border_MouseDown">
         <Grid>
@@ -106,7 +105,7 @@
                                 </materialDesign:Card>
                                 <materialDesign:Card Width="700" Height="370" materialDesign:ShadowAssist.ShadowDepth="Depth0" Margin="15">
                                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                        <lvc:CartesianChart Series="{Binding SeriesCollection, UpdateSourceTrigger=PropertyChanged}" Margin="20" Background="Gray"/>
+
                                     </Grid>
                                 </materialDesign:Card>
                                 <materialDesign:Card Width="700" Height="370" materialDesign:ShadowAssist.ShadowDepth="Depth0" Margin="15">

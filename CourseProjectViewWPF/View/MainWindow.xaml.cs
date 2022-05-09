@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace CourseProjectViewWPF.View
 {
@@ -9,7 +10,6 @@ namespace CourseProjectViewWPF.View
         {
             InitializeComponent();
         }
-
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {

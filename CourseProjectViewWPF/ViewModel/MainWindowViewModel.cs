@@ -14,9 +14,6 @@ using System.Collections.Specialized;
 using System.Windows.Data;
 using System.ComponentModel;
 
-using LiveCharts;
-using LiveCharts.Wpf;
-
 namespace CourseProjectViewWPF.ViewModel
 {
     public class MainWindowViewModel : ViewModel
@@ -26,6 +23,7 @@ namespace CourseProjectViewWPF.ViewModel
         private readonly DialogVisitor Visitor = new();
 
         private readonly DataServices DataService = new();
+
         public MainWindowViewModel(User User)
         {
             this.User = User;
@@ -43,7 +41,7 @@ namespace CourseProjectViewWPF.ViewModel
             DatePropertyChanged();
         }
 
-        private void Actions_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+    private void Actions_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             CalculateTotalValues();
             DataService.UpdateUserData(User);
