@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using LiveCharts;
+using LiveCharts.Defaults;
+using LiveCharts.Wpf;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -15,6 +18,11 @@ namespace CourseProjectViewWPF.View
         {
             if (e.ChangedButton == MouseButton.Left)
                 DragMove();
+        }
+
+        private void Window_ContentRendered(object sender, System.EventArgs e)
+        {
+            ChartTest.Update();
         }
     }
 }

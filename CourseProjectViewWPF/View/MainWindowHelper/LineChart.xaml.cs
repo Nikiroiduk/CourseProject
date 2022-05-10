@@ -1,5 +1,9 @@
-﻿using System;
+﻿using LiveCharts;
+using LiveCharts.Defaults;
+using LiveCharts.Wpf;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +24,7 @@ namespace CourseProjectViewWPF.View.MainWindowHelper
     /// </summary>
     public partial class LineChart : UserControl
     {
+
         public LineChart()
         {
             InitializeComponent();

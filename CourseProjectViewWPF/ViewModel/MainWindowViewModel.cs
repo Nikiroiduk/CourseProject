@@ -13,6 +13,11 @@ using CourseProjectBL.Services;
 using System.Collections.Specialized;
 using System.Windows.Data;
 using System.ComponentModel;
+using LiveCharts;
+using LiveCharts.Wpf;
+using LiveCharts.Defaults;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace CourseProjectViewWPF.ViewModel
 {
@@ -41,9 +46,46 @@ namespace CourseProjectViewWPF.ViewModel
             DatePropertyChanged();
         }
 
-    private void Actions_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        #region LastHourSeries
+        private SeriesCollection _LastHourSeries;
+        public SeriesCollection LastHourSeries
+        {
+            get => _LastHourSeries;
+            set => Set(ref _LastHourSeries, value);
+        }
+        #endregion
+
+        private void updateChart()
+        {
+            List<double> income = new();
+            List<double> expense = new();
+            for (int i = 0; i <= (EndDate.Date - StartDate.Date).Days; i++)
+            {
+                income.Add((from x in Actions.OfType<Action>()
+                            where x.DateTime.Date.Year == StartDate.Date.Year &&
+                                  x.DateTime.Date.Day == StartDate.Date.Day + i &&
+                                  x.ActionType == ActionType.Income
+                            select x.Amount).Sum()); 
+                expense.Add((from x in Actions.OfType<Action>()
+                             where x.DateTime.Date.Year == StartDate.Date.Year &&
+                                   x.DateTime.Date.Day == StartDate.Date.Day + i &&
+                                   x.ActionType == ActionType.Expense
+                             select x.Amount).Sum());
+            }
+            var IncomeChartValue = new ChartValues<ObservableValue>();
+            var ExpenseChartValue = new ChartValues<ObservableValue>();
+            for (int i = 0; i < income.Count; i++)
+            {
+                IncomeChartValue.Add(new ObservableValue(income[i]));
+                ExpenseChartValue.Add(new ObservableValue(expense[i]));
+            }
+            LastHourSeries = new SeriesCollection { new LineSeries { Values = IncomeChartValue }, new LineSeries { Values = ExpenseChartValue } };
+        }
+
+        private void Actions_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             CalculateTotalValues();
+            updateChart();
             DataService.UpdateUserData(User);
         }
 
@@ -104,7 +146,6 @@ namespace CourseProjectViewWPF.ViewModel
                 Action action = item as Action;
                 if (action == null) return false;
                 return action.DateTime.Date >= StartDate.Date && action.DateTime.Date <= EndDate.Date;
-
             };
         }
         #endregion

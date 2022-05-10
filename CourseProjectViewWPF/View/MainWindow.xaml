@@ -17,7 +17,10 @@
         Background="Transparent"
         x:Name="Window"
         WindowState="{Binding WindowState, Mode=TwoWay}"
-        d:DataContext="{d:DesignInstance Type=viewmodel:MainWindowViewModel}">
+        d:DataContext="{d:DesignInstance Type=viewmodel:MainWindowViewModel}"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        WindowStartupLocation="CenterScreen"
+        ContentRendered="Window_ContentRendered">
     <Window.Resources>
         <crtr:ContentHeightConverter x:Key="ContentHeightConverter"/>
     </Window.Resources>
@@ -105,7 +108,7 @@
                                 </materialDesign:Card>
                                 <materialDesign:Card Width="700" Height="370" materialDesign:ShadowAssist.ShadowDepth="Depth0" Margin="15">
                                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-
+                                        <lvc:CartesianChart x:Name="ChartTest" Series="{Binding LastHourSeries}"/>
                                     </Grid>
                                 </materialDesign:Card>
                                 <materialDesign:Card Width="700" Height="370" materialDesign:ShadowAssist.ShadowDepth="Depth0" Margin="15">
