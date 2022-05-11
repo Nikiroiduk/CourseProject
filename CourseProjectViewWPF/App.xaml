@@ -3,16 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:CourseProjectViewWPF"
              xmlns:vm="clr-namespace:CourseProjectViewWPF.ViewModel"
-             xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes">
-    <!--StartupUri="View/test.xaml">-->
-    <!--StartupUri="View/LoginWindow.xaml">-->
-    <!--StartupUri="View/MainWindow.xaml">-->
+             xmlns:material="http://materialdesigninxaml.net/winfx/xaml/themes"
+             StartupUri="View/LoginWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <material:CustomColorTheme BaseTheme="Light" PrimaryColor="#3A36DB" SecondaryColor="Red">
                 </material:CustomColorTheme>
-                <!--<material:BundledTheme BaseTheme="Dark" PrimaryColor="Red"  SecondaryColor="Blue"/>-->
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/Generic.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>

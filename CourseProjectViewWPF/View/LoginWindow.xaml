@@ -17,7 +17,7 @@
     ShowInTaskbar="True"
     WindowStyle="None"
     x:Name="Window">
-<!--Password box for password-->
+    <!--TODO: Password box for password-->
     <Window.DataContext>
         <local:LoginWindowViewModel/>
     </Window.DataContext>

@@ -19,12 +19,7 @@ namespace CourseProjectViewWPF
     {
         public App()
         {
-            LoginWindowViewModel loginWindowViewModel = new();
-            loginWindowViewModel.Login = "Nikiroiduk";
-            loginWindowViewModel.Password = "k.lbr040880";
-            var user = AuthService.Auth(loginWindowViewModel.Login, loginWindowViewModel.Password);
-            WindowService windowService = new();
-            windowService.CreateWindow(user);
+            
         }
     }
 }

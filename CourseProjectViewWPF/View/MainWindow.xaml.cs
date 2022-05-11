@@ -23,6 +23,8 @@ namespace CourseProjectViewWPF.View
         private void Window_ContentRendered(object sender, System.EventArgs e)
         {
             ChartTest.Update();
+            IncomePieChart.Update();
+            ExpensePieChart.Update();
         }
     }
 }

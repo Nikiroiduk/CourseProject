@@ -107,15 +107,56 @@
                                     <helper:LatestActions/>
                                 </materialDesign:Card>
                                 <materialDesign:Card Width="700" Height="370" materialDesign:ShadowAssist.ShadowDepth="Depth0" Margin="15">
-                                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                        <lvc:CartesianChart x:Name="ChartTest" Series="{Binding LastHourSeries}"/>
+                                    <Grid Margin="10">
+                                        <StackPanel Orientation="Vertical">
+                                            <Grid Margin="20">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock FontWeight="DemiBold" FontSize="18" Text="Cartesian chart" VerticalAlignment="Center"/>
+                                                </StackPanel>
+                                            </Grid>
+                                        </StackPanel>
+                                        <lvc:CartesianChart Margin="0, 70, 0, 0" x:Name="ChartTest" Series="{Binding CartesianChart}" DataTooltip="{x:Null}"/>
                                     </Grid>
                                 </materialDesign:Card>
                                 <materialDesign:Card Width="700" Height="370" materialDesign:ShadowAssist.ShadowDepth="Depth0" Margin="15">
-
+                                    <Grid Margin="10">
+                                        <StackPanel Orientation="Vertical">
+                                            <Grid Margin="20">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock FontWeight="DemiBold" FontSize="18" Text="Income pie chart" VerticalAlignment="Center"/>
+                                                </StackPanel>
+                                            </Grid>
+                                        </StackPanel>
+                                        <lvc:PieChart Margin="0, 70, 0, 0" x:Name="IncomePieChart" Series="{Binding IncomePieChart}" 
+                                                      LegendLocation="Right" InnerRadius="70">
+                                            <lvc:PieChart.ChartLegend>
+                                                <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
+                                            </lvc:PieChart.ChartLegend>
+                                            <lvc:PieChart.DataTooltip>
+                                                <lvc:DefaultTooltip BulletSize="20"></lvc:DefaultTooltip>
+                                            </lvc:PieChart.DataTooltip>
+                                        </lvc:PieChart>
+                                    </Grid>
                                 </materialDesign:Card>
                                 <materialDesign:Card Width="700" Height="370" materialDesign:ShadowAssist.ShadowDepth="Depth0" Margin="15">
-
+                                    <Grid Margin="10">
+                                        <StackPanel Orientation="Vertical">
+                                            <Grid Margin="20">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock FontWeight="DemiBold" FontSize="18" Text="Expense pie chart" VerticalAlignment="Center"/>
+                                                </StackPanel>
+                                            </Grid>
+                                        </StackPanel>
+                                        <lvc:PieChart Margin="0, 70, 0, 0" x:Name="ExpensePieChart" Series="{Binding ExpensePieChart}" 
+                                                      LegendLocation="Right" InnerRadius="70">
+                                            <lvc:PieChart.ChartLegend>
+                                                <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
+                                            </lvc:PieChart.ChartLegend>
+                                            <lvc:PieChart.DataTooltip>
+                                                <lvc:DefaultTooltip BulletSize="20"></lvc:DefaultTooltip>
+                                            </lvc:PieChart.DataTooltip>
+                                        </lvc:PieChart>
+                                    </Grid>
                                 </materialDesign:Card>
                             </WrapPanel>
                             <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Orientation="Horizontal">

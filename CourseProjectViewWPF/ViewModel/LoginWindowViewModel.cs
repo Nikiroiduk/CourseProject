@@ -136,7 +136,6 @@ namespace CourseProjectViewWPF.ViewModel
 
         #endregion
 
-
         #region SignUpClick
         public ICommand SignUpClick { get; }
 
@@ -168,14 +167,19 @@ namespace CourseProjectViewWPF.ViewModel
         }
         #endregion
 
+        #region StartProgram
         private static void StartProgram(User user)
         {
             WindowService windowService = new();
             windowService.CreateWindow(user);
         }
+        #endregion
+
+        #region CloseLoginWindow
         private void CloseLoginWindow(Window window)
         {
             window.Close();
         }
+        #endregion
     }
 }

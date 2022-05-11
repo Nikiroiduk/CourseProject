@@ -16,18 +16,20 @@ using System.ComponentModel;
 using LiveCharts;
 using LiveCharts.Wpf;
 using LiveCharts.Defaults;
-using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Windows.Media;
 
 namespace CourseProjectViewWPF.ViewModel
 {
     public class MainWindowViewModel : ViewModel
     {
+        #region PrivateFields
         private User User { get; set; }
 
         private readonly DialogVisitor Visitor = new();
 
         private readonly DataServices DataService = new();
+        #endregion
 
         public MainWindowViewModel(User User)
         {
@@ -46,16 +48,77 @@ namespace CourseProjectViewWPF.ViewModel
             DatePropertyChanged();
         }
 
-        #region LastHourSeries
-        private SeriesCollection _LastHourSeries;
-        public SeriesCollection LastHourSeries
+        #region IncomePieChart
+        private SeriesCollection _IncomePieChart;
+        public SeriesCollection IncomePieChart
         {
-            get => _LastHourSeries;
-            set => Set(ref _LastHourSeries, value);
+            get => _IncomePieChart;
+            set => Set(ref _IncomePieChart, value);
         }
         #endregion
 
-        private void updateChart()
+        #region ExpensePieChart
+        private SeriesCollection _ExpensePieChart;
+        public SeriesCollection ExpensePieChart
+        {
+            get => _ExpensePieChart;
+            set => Set(ref _ExpensePieChart, value);
+        }
+        #endregion
+
+        #region CartesianChart
+        private SeriesCollection _CartesianChart;
+        public SeriesCollection CartesianChart
+        {
+            get => _CartesianChart;
+            set => Set(ref _CartesianChart, value);
+        }
+        #endregion
+
+        #region UpdateIncomePieChart
+        private void UpdateIncomePieChart()
+        {
+            var meh = new SeriesCollection();
+
+            for (int i = 0; i <= ((int)Category.Other); i++)
+            {
+                var amount = (from x in Actions.OfType<Action>()
+                              where x.ActionType == ActionType.Income &&
+                                    x.Category == (Category)i
+                              select x.Amount).Sum();
+                meh.Add(new PieSeries
+                {
+                    Title = $"{(Category)i}",
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(amount) }
+                });
+            }
+            IncomePieChart = meh;
+        }
+        #endregion
+
+        #region UpdateExpensePieChart
+        private void UpdateExpensePieChart()
+        {
+            var meh = new SeriesCollection();
+
+            for (int i = 0; i <= ((int)Category.Other); i++)
+            {
+                var amount = (from x in Actions.OfType<Action>()
+                              where x.ActionType == ActionType.Expense &&
+                                    x.Category == (Category)i
+                              select x.Amount).Sum();
+                meh.Add(new PieSeries
+                {
+                    Title = $"{(Category)i}",
+                    Values = new ChartValues<ObservableValue> { new ObservableValue(amount) }
+                });
+            }
+            ExpensePieChart = meh;
+        }
+        #endregion
+
+        #region UpdateCartesianChart
+        private void UpdateCartesianChart()
         {
             List<double> income = new();
             List<double> expense = new();
@@ -79,15 +142,34 @@ namespace CourseProjectViewWPF.ViewModel
                 IncomeChartValue.Add(new ObservableValue(income[i]));
                 ExpenseChartValue.Add(new ObservableValue(expense[i]));
             }
-            LastHourSeries = new SeriesCollection { new LineSeries { Values = IncomeChartValue }, new LineSeries { Values = ExpenseChartValue } };
+            CartesianChart = new SeriesCollection
+            {
+                new LineSeries
+                {
+                    Values = IncomeChartValue,
+                    Fill = new SolidColorBrush(Color.FromArgb(38, 58, 54, 219)),
+                    Stroke = new SolidColorBrush(Color.FromArgb(255, 58, 54, 219))
+                },
+                new LineSeries
+                {
+                    Values = ExpenseChartValue,
+                    Fill = new SolidColorBrush(Color.FromArgb(38, 219, 54, 64)),
+                    Stroke = new SolidColorBrush(Color.FromArgb(255, 219, 54, 64))
+                },
+            };
         }
+        #endregion
 
+        #region ActionsCollectionChanged
         private void Actions_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             CalculateTotalValues();
-            updateChart();
+            UpdateCartesianChart();
+            UpdateIncomePieChart();
+            UpdateExpensePieChart();
             DataService.UpdateUserData(User);
         }
+        #endregion
 
         #region Actions
         public ICollectionView Actions
@@ -137,19 +219,6 @@ namespace CourseProjectViewWPF.ViewModel
 
         #endregion
 
-        #region DatePropertyChanged
-        private void DatePropertyChanged()
-        {
-            Actions.SortDescriptions.Add(new SortDescription("DateTime", ListSortDirection.Descending));
-            Actions.Filter = item =>
-            {
-                Action action = item as Action;
-                if (action == null) return false;
-                return action.DateTime.Date >= StartDate.Date && action.DateTime.Date <= EndDate.Date;
-            };
-        }
-        #endregion
-
         #region EndDate
         private DateTime _EndDate = DateTime.Now;
         public DateTime EndDate
@@ -163,7 +232,20 @@ namespace CourseProjectViewWPF.ViewModel
         }
         #endregion
 
-        #region CurrencySymbol;
+        #region DatePropertyChanged
+        private void DatePropertyChanged()
+        {
+            Actions.SortDescriptions.Add(new SortDescription("DateTime", ListSortDirection.Descending));
+            Actions.Filter = item =>
+            {
+                Action action = item as Action;
+                if (action == null) return false;
+                return action.DateTime.Date >= StartDate.Date && action.DateTime.Date <= EndDate.Date;
+            };
+        }
+        #endregion
+
+        #region CurrencySymbol
         public string CurrencySymbol
         {
             get => CurrencyDictionary.currencySymbolsDictionary[Settings.MainCurrency];
@@ -171,13 +253,14 @@ namespace CourseProjectViewWPF.ViewModel
         }
         #endregion
 
+        #region CalculateTotalValues
         private void CalculateTotalValues()
         {
             TotalIncome = (from x in Actions.OfType<Action>() where x.ActionType == ActionType.Income select x.Amount).Sum();
             TotalExpense = (from x in Actions.OfType<Action>() where x.ActionType == ActionType.Expense select x.Amount).Sum();
             TotalSummary = TotalIncome - TotalExpense;
         }
-
+        #endregion
 
         #region AddNew
         public ICommand AddNew { get; }
@@ -224,7 +307,6 @@ namespace CourseProjectViewWPF.ViewModel
         }
         #endregion
 
-
         #region CloseWindow
         public ICommand CloseWindow { get; }
 
@@ -264,6 +346,5 @@ namespace CourseProjectViewWPF.ViewModel
             WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
         }
         #endregion
-
     }
 }
