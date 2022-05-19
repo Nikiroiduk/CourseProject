@@ -20,12 +20,6 @@ namespace CourseProjectBL.Services
             return null;
         }
 
-        //public bool AddNewUser(string Login, string Password)
-        //{
-        //    db.InsertRecord("Users", new User { Login = Login, Password = PasswordService.EncryptPlainTextToCipherText(Password) });
-        //    return true;
-        //}
-
         public User AddNewUser(string Name, string Login, string Password)
         {
             var user = new User { Name = Name, Login = Login, Password = PasswordService.EncryptPlainTextToCipherText(Password) };

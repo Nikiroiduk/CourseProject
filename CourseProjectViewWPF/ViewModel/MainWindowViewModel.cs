@@ -122,7 +122,7 @@ namespace CourseProjectViewWPF.ViewModel
         {
             List<double> income = new();
             List<double> expense = new();
-            for (int i = 0; i <= (EndDate.Date - StartDate.Date).Days; i++)
+            for (int i = (EndDate.Date - StartDate.Date).Days; i >= 0; i--)
             {
                 income.Add((from x in Actions.OfType<Action>()
                             where x.DateTime.Date.Year == StartDate.Date.Year &&
